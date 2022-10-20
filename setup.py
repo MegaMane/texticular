@@ -12,7 +12,7 @@ setup(
     name='texticular',
     version='0.0.1',
     description='A text adventure in python',
-    author='Jon Ludena',
+    author='MegaMane',
     extras_require=dict(tests=['pytest']),
     packages=find_namespace_packages(where="src"),
     package_dir={"": "src"},
