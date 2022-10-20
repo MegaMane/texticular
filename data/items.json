@@ -1,0 +1,23 @@
+{
+   "items": [
+    {
+        "type": "Container",
+        "name": "Couch",
+        "keyValue": "room201-couch",
+        "descriptions": [
+            {
+                "label": "Main", 
+                "text": "There is an obnoxious orange couch in the corner"
+            },
+            {
+                "label": "Sitting", 
+                "text": "It kinda smells a little musty."
+            }
+        ],
+        "flags":["CONTAINERBIT","SETPIECEBIT"],
+        "items":[]
+
+    }
+    
+   ]
+}
