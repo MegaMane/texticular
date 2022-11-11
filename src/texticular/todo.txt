@@ -1,4 +1,0 @@
-can create gameloader
-- can cll readFromFile
--readfrom file returns correct string
-readfromfile throws exception when file doesn't exist

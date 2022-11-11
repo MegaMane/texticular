@@ -1,5 +1,11 @@
-import json
-with open("../../data/rooms.json") as json_file:
-    config = json.load(json_file)
+from game_controller import  Controller
 
-print(json.dumps(config, indent=4))
+controller = Controller()
+
+controller.go()
+
+while controller.state != "Game Over":
+    controller.main_loop()
+
+
+
