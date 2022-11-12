@@ -4,6 +4,32 @@ that is config driven json files loaded to create rooms, items, characters, conv
 
 Project should be well documented using Pep8 docstrings
 
+Requirements
+
+A Game Written in Python Modeled After Classic Interactive Fiction or Text Adventures
+
+The basic game loop is this
+
+Receive input as simple typed commands from the player
+The Parser processes those commands and determines if they are valid  (meaning they consist of at the very least a known verb, usually a direct object and optionally an indirect object)
+If the command is valid it is passed off to the handler/controller which:
+	performs the actions
+	triggers any events
+	updates the clock
+The results of the turn get sent back to the player as output
+
+The main gameplay consists of navigating "rooms" which contain contextual actions that can be triggered as well as objects inside the rooms that also have their own set of contextual verb interactions
+Their are also other characters that can be talked to which initializes a dialogue that may have side effects triggering other actions (such as making changes to a room, or yielding a new item that can be used)
+The purpose of all this is to solve a puzzle. Navigating the rooms themselves to achieve some goal is the root of the gameplay. The simplest example of this being a lock and key puzzle. 
+Their is also a simple currency and shop system that gets incorporated into the puzzle solving.
+
+
+
+
+As for the UI
+
+The initial UI is just console based and outputs text data
+
 
 The Handler/Game Controller
 ---------------------------
@@ -59,9 +85,16 @@ The nouns or objects are defined at runtime in the games config files.
 </p>
 
 
-The Player:
+The Player Character:
 ----------
 Player should have an inventory that can be inspected
+They Player has the following attributes
+HP
+HPoo
+Sex
+Age
+Wearing
+
 
 Help:
 --------------
@@ -146,6 +179,19 @@ NPC
 
 
 To Do:  
+
+Players should expect to be able to 
+Move Between Rooms and get a description of all the relevant things in their current environment
+Pick up items they think might be useful and store them in inventory
+Drop items they no longer think they need 
+Open locked doors and containers assuming they have the correct key
+Perform context sensitive actions on a per object bases (meaning you can eat the cake but not the couch...but feel free to try)
+Have conversations with other characters which puts the game into a different dialogue state with options to pick from instead of free form typing
+Purchase Items from "shops" or vendors which also puts the game into a different menu based interface similar to a dialogue
+Save a game in progress
+Load a Saved Game
+View a log of previous commands
+Get Hints if they are stuck
 
 <ul>
 <li>Initialize Rooms, Items, Characters etc from Json</li>

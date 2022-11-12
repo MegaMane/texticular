@@ -1,5 +1,6 @@
 from itertools import count
 from texticular.game_enums import Flags
+import json
 
 
 class GameObject:
@@ -9,9 +10,18 @@ class GameObject:
     As well as a class level dictionary that keeps track of all game objects that are instantiated.
 
     Attributes
-    -----------
-    attribute1: list
-        a list of dictionaries in the form of {col: val} for each successfully parsed item
+    ----------
+    objects_by_key: dict
+        A class level dictionary that keeps track of all the game objects created
+        key_value >> GameObject
+    id: int
+        A globally unique integer ID assigned to each item that is created
+    name: str
+        The friendly name of the game object
+    current_description: str
+        The description of the game object
+    key_value: str
+        A string identifier for the object containing no spaces that must be unique across all game objects
 
     Methods
     ---------
@@ -34,6 +44,7 @@ class GameObject:
         self.descriptions = descriptions
         self.location_key = location_key
         self.flags = set()
+        self.action_func_name = None
         for flag in flags:
             self.add_flag(flag)
 
@@ -56,7 +67,7 @@ class GameObject:
             GameObject.objects_by_key[key_value] = self
 
     def __str__(self):
-        return self.name
+        return str(vars(self))
 
     @property
     def current_description(self):
@@ -146,6 +157,57 @@ class GameObject:
 
     def action(self, func):
         def wrapper_action(*args, **kwargs):
-            func( *args, **kwargs)
+            func(*args, **kwargs)
         return wrapper_action
 
+    def encode_tojson(self,o):
+        """Serialize Game Object to Json
+
+        """
+        return {
+            "id": self.id,
+            "keyValue": self.key_value,
+            "locationKey": self.location_key,
+            "name": self.name,
+            "currentDescription": self._current_description,
+            "examine": self._examine_description,
+            "descriptions": self.descriptions,
+            "flags": list(self.flags),
+            "actionFunction": self.action_func_name
+        }
+
+if __name__ == "__main__":
+    game_object = GameObject(key_value="office_lock",
+                             name="lock",
+                             descriptions={
+                                 "Main": "A little grey padlock",
+                                 "Examine": "It's full of tiny little ridges, dings, and dents.",
+                                 "Description-GummedUp": "The lock has a piece of gum jammed in it, no key will open it now.",
+                                 "Examine-Discover": "Etched at the bottom of the lock is a faint 4 digit code. It reads 8745."
+                             }
+                             )
+    print(game_object)
+
+    game_object.add_flag("LOCKEDBIT")
+    assert "LOCKEDBIT" in game_object.flags
+
+    def custom_action(controller, target: GameObject = game_object, additional_arg="Extra"):
+        target.action_func_name = "custom_action"
+        if controller.lower() == "open":
+            target.remove_flag("LOCKEDBIT")
+            print(additional_arg)
+            return True
+        return False
+
+    def encode_game_object(o):
+        if isinstance(o, GameObject):
+            return {"name": o.name}
+
+    game_object.action = game_object.action(custom_action)
+
+    game_object.action(controller="Open")
+
+    assert "LOCKEDBIT" not in game_object.flags
+    game_object.add_flag("TAKEBIT")
+
+    print(json.dumps(game_object, indent=4, default=game_object.encode_tojson))

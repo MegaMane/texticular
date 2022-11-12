@@ -15,9 +15,10 @@ x Can move a game object to another location (game object)
 x Can remove a game object from a location
 x Can add a flags to a game object
 x Can remove a flag rom a game object
-can print a game object __repr__ method
-Can call custom Action method
-can serialize a game object to json
+x can print a game object __str__ method
+X Can call custom Action method
+x can serialize a game object to json
+can recreate game object from json including linking custom action
 
 
 """
@@ -136,3 +137,22 @@ def test_canCallcustomActionMethod(game_object):
 def test_canPrintGameObject(game_object):
     print(game_object)
     assert True
+
+def test_canCallCusomActionMethod(game_object):
+    game_object.add_flag("LOCKEDBIT")
+
+    def custom_action(controller, target: GameObject = None, additional_arg="Extra"):
+        if controller.lower() == "open":
+            target.remove_flag("LOCKEDBIT")
+            print(additional_arg)
+            return True
+        return False
+
+    game_object.action = game_object.action(custom_action)
+
+    game_object.action(controller="Open")
+
+    assert "LOCKEDBIT" not in game_object.flags
+
+
+
