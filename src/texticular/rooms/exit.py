@@ -36,3 +36,23 @@ class RoomExit(GameObject):
         super().__init__(key_value, name, descriptions, location_key, flags)
         if self.key_object and Flags.LOCKEDBIT not in self.flags:
             self.add_flag(Flags.LOCKEDBIT)
+
+    def encode_tojson(self,o):
+        """Serialize Exit Object to Json
+
+        """
+        return {
+            "type": self.__class__.__name__,
+            "id": self.id,
+            "keyValue": self.key_value,
+            "locationKey": self.location_key,
+            "name": self.name,
+            "connection": self.connection,
+            "keyObject": self.key_object,
+            "currentDescription": self._current_description,
+            "examine": self._examine_description,
+            "descriptions": self.descriptions,
+            "flags": [flag.name for flag in self.flags],
+            "actionMethod": self.action_method_name,
+
+        }

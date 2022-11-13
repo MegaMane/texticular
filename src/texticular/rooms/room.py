@@ -29,6 +29,9 @@ class Room(GameObject):
 
     """
     room_count = 0
+    @classmethod
+    def decode_fromjson(cls, json):
+        pass
 
     def __init__(self, key_value: str, name: str, descriptions: dict, location_key="Map", flags=None):
         self.times_visited = 0
@@ -102,8 +105,38 @@ class Room(GameObject):
     def get_npcs(self):
         pass
 
+    def encode_tojson(self,o):
+        """Serialize Room Object to Json
+
+        """
+        exit_dict = {}
+        for exit_direction in self.exits.keys():
+            exit_dict[exit_direction.name] = self.exits[exit_direction].encode_tojson(None)
+
+        item_dict = {}
+
+
+        return {
+            "type": self.__class__.__name__,
+            "id": self.id,
+            "keyValue": self.key_value,
+            "locationKey": self.location_key,
+            "name": self.name,
+            "currentDescription": self._current_description,
+            "examine": self._examine_description,
+            "descriptions": self.descriptions,
+            "flags": [flag.name for flag in self.flags],
+            "actionMethod": self.action_method_name,
+            "timesVisited": self.times_visited,
+            "exits": exit_dict,
+            "items": self.items,
+            "npcs": self.npcs
+        }
+
+
 if __name__ == "__main__":
     import textwrap
+    import json
     room_201 = Room(key_value="room201",
                     name="Room 201",
                     descriptions={"Main":("As you look around the hotel room you see an old TV with "
@@ -146,6 +179,8 @@ if __name__ == "__main__":
 
 
     print("\n".join(textwrap.wrap(room_201.describe(), width=150, replace_whitespace=False)))
+
+    print(json.dumps(room_201, indent=4, default=room_201.encode_tojson))
 
 
 

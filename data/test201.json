@@ -1,0 +1,61 @@
+{
+    "type": "Room",
+    "id": 1,
+    "keyValue": "room201",
+    "locationKey": "Map",
+    "name": "Room 201",
+    "currentDescription": "As you look around the hotel room you see an old TV with rabbit ears that looks like it came straight out of the 1950's. Against the wall there is a beat up night stand with a little drawer built into it and an old phone on top. Next to it is a lumpy old bed that looks like it's seen better days, with a dark brown stain on the sheets and a funny smell coming from it. There is an obnoxious orange couch in the corner next to a small window smudged with sticky purple hand prints. The stuffing is coming out of the cushions which are also spotted with purple, and the floor is covered with cans of Fast Eddie's Colon Cleanse.",
+    "examine": "...",
+    "descriptions": {
+        "Main": "As you look around the hotel room you see an old TV with rabbit ears that looks like it came straight out of the 1950's. Against the wall there is a beat up night stand with a little drawer built into it and an old phone on top. Next to it is a lumpy old bed that looks like it's seen better days, with a dark brown stain on the sheets and a funny smell coming from it. There is an obnoxious orange couch in the corner next to a small window smudged with sticky purple hand prints. The stuffing is coming out of the cushions which are also spotted with purple, and the floor is covered with cans of Fast Eddie's Colon Cleanse."
+    },
+    "flags": [
+        "CONTAINERBIT",
+        "ONBIT"
+    ],
+    "actionMethod": null,
+    "timesVisited": 0,
+    "items": [],
+    "exits": {
+        "WEST": {
+            "type": "RoomExit",
+            "id": 2,
+            "keyValue": "exits-room201-bathroom",
+            "locationKey": "room201",
+            "name": "Bathroom Door",
+            "connection": "bathroom-room201",
+            "keyObject": null,
+            "currentDescription": "is the DOOR to that sweet sweet porcelain throne.",
+            "examine": "...",
+            "descriptions": {
+                "Main": "is the DOOR to that sweet sweet porcelain throne.",
+                "GreatDane": "is the DOOR to a fucked up killer version of Scooby-Doo (and He's hungry)!"
+            },
+            "flags": [
+                "DOORBIT",
+                "OPENBIT"
+            ],
+            "actionMethod": null
+        },
+        "EAST": {
+            "type": "RoomExit",
+            "id": 3,
+            "keyValue": "exits-room201-hallway",
+            "locationKey": "room201",
+            "name": "Hallway Door",
+            "connection": "westHallway-2f",
+            "keyObject": null,
+            "currentDescription": "the DOOR leads outside to the hallway...where hopefully there are toilets.",
+            "examine": "...",
+            "descriptions": {
+                "Main": "the DOOR leads outside to the hallway...where hopefully there are toilets."
+            },
+            "flags": [
+                "DOORBIT",
+                "OPENBIT"
+            ],
+            "actionMethod": null
+        }
+    },
+    "npcs": []
+}
