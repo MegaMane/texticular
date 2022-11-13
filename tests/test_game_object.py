@@ -86,13 +86,13 @@ def test_canRemoveGameObjectFromMap(game_object):
     assert game_object.location_key is None
 
 def test_canAddFlagsToGameObject(game_object):
-    game_object.add_flag("TAKEBIT")
-    game_object.add_flag("LOCKEDBIT")
+    game_object.add_flag_by_name("TAKEBIT")
+    game_object.add_flag_by_name("LOCKEDBIT")
     assert len(game_object.flags) == 2
 
 def test_raisesValueError_WhenFlagIsNotValidEnumMember(game_object):
     with raises(ValueError):
-        game_object.add_flag("FAKEBIT")
+        game_object.add_flag_by_name("FAKEBIT")
 
 def test_canInstantiateGameObjectWithFlags():
     set_piece = GameObject(
@@ -113,12 +113,12 @@ def test_raisesValueError_WhenObjectInstantiatedWithInvalidFlag():
 
 def test_canRemoveFlag(game_object):
     game_object.flags = set()
-    game_object.add_flag("SETPIECEBIT")
-    game_object.remove_flag("SETPIECEBIT")
+    game_object.add_flag_by_name("SETPIECEBIT")
+    game_object.remove_flag_by_name("SETPIECEBIT")
     assert len(game_object.flags) == 0
 
 def test_ReturnFalseWhenRemovingFlagThatDoesNotExist(game_object):
-    assert game_object.remove_flag("NonExistant") == False
+    assert game_object.remove_flag_by_name("NonExistant") == False
 
 
 
@@ -139,11 +139,12 @@ def test_canPrintGameObject(game_object):
     assert True
 
 def test_canCallCusomActionMethod(game_object):
-    game_object.add_flag("LOCKEDBIT")
+    game_object.add_flag_by_name("LOCKEDBIT")
 
-    def custom_action(controller, target: GameObject = None, additional_arg="Extra"):
+    def custom_action(controller, target: GameObject = game_object, additional_arg="Extra"):
+        target.action_method_name = "custom_action"
         if controller.lower() == "open":
-            target.remove_flag("LOCKEDBIT")
+            target.remove_flag_by_name("LOCKEDBIT")
             print(additional_arg)
             return True
         return False

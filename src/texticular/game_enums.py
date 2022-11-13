@@ -81,17 +81,27 @@ class Flags(Enum):
 
 
 if __name__ == "__main__":
-    for direction in Direction:
+    for direction in Directions:
         print(direction)
 
-    print(repr(Direction.SOUTH))
+    print(repr(Directions.SOUTH))
 
-    print(Direction.NORTH.value)
+    print(Directions.NORTH.value)
 
-    print(Direction.NORTH.name)
+    print(Directions.NORTH.name)
 
     try:
-        print(Direction["GORTH"])
+        print(Directions["GORTH"])
     except KeyError:
         print("Not a valid direction")
+
+    flags = set()
+    flags.add(Flags.LOCKEDBIT)
+    flags.add(Flags.CONTAINERBIT)
+    flags.add(Flags["LIGHTBIT"])
+    print(flags)
+    print(Flags.LOCKEDBIT in flags)
+    flags.remove(Flags.LOCKEDBIT)
+    flags.remove(Flags["CONTAINERBIT"])
+    print(flags)
 

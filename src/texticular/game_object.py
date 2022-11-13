@@ -17,11 +17,14 @@ class GameObject:
     id: int
         A globally unique integer ID assigned to each item that is created
     name: str
-        The friendly name of the game object
+        The friendly object name (does not have to be unique)
+   descriptions: dict
+        A dictionary of descriptions for the object that can change based on events in the game
+        At the very least should contain  {"Main": "Some Object Description"}
     current_description: str
         The description of the game object
     key_value: str
-        A string identifier for the object containing no spaces that must be unique across all game objects
+        The globally unique string identifier for an object, should contain no spaces
 
     Methods
     ---------
@@ -38,13 +41,31 @@ class GameObject:
         return cls.objects_by_key .get(key_value)
 
 
-    def __init__(self, key_value: str, name: str, descriptions: dict, location_key=None, flags=[]):
+    def __init__(self, key_value: str, name: str, descriptions: dict, location_key=None, flags=None):
+        """The constructor for the GameObject Class
+
+        Parameters
+        ----------
+        key_value: str
+            The Unique Game-wide Identifier for an object
+        name: str
+            The friendly object name (does not have to be unique)
+        descriptions: dict
+            A dictionary of descriptions for the object that can change based on events in the game
+            At the very least should contain  {"Main": "Some Object Description"}
+        location_key: str
+            The object key_value where the exit is located
+        flags: list
+            a list of "Flags" enum members to define attributes of an object to be used by game logic
+        """
         self.id = next(GameObject._objectid)
         self.name = name
         self.descriptions = descriptions
         self.location_key = location_key
         self.flags = set()
-        self.action_func_name = None
+        self.action_method_name = None
+        if flags is None:
+            flags = []
         for flag in flags:
             self.add_flag(flag)
 
@@ -125,7 +146,11 @@ class GameObject:
          """
         self.location_key = None
 
-    def add_flag(self, flag:str):
+    def add_flag(self, flag: Flags):
+        self.flags.add(flag)
+
+
+    def add_flag_by_name(self, flag:str):
         """Attempt to add a flag attribute to a game object if it is a valid member of the Flags Enum.
 
         Parameters
@@ -135,21 +160,27 @@ class GameObject:
         """
         flags = [member.name for member in Flags]
         if flag in flags:
-            self.flags.add(flag)
+            self.flags.add(Flags[flag])
         else:
             raise ValueError(f"Flag {flag} does not exist in game_enums.Flags.")
 
-    def remove_flag(self, flag) -> bool:
+    def remove_flag(self, flag: Flags):
+        try:
+            self.flags.remove(flag)
+            return True
+        except KeyError:
+            return False
+    def remove_flag_by_name(self, flag:str) -> bool:
         """Remove a flag enum attribute from the game object if it is found in the flags set else return false
 
         Parameters
         ----------
-        flag:str
+        flag:Flags
             The flag to be removed from the game object
 
         """
         try:
-            self.flags.remove(flag)
+            self.flags.remove(Flags[flag])
             return True
         except KeyError:
             return False
@@ -165,6 +196,7 @@ class GameObject:
 
         """
         return {
+            "type": self.__class__.__name__,
             "id": self.id,
             "keyValue": self.key_value,
             "locationKey": self.location_key,
@@ -172,8 +204,8 @@ class GameObject:
             "currentDescription": self._current_description,
             "examine": self._examine_description,
             "descriptions": self.descriptions,
-            "flags": list(self.flags),
-            "actionFunction": self.action_func_name
+            "flags": [flag.name for flag in self.flags],
+            "actionMethod": self.action_method_name
         }
 
 if __name__ == "__main__":
@@ -188,13 +220,13 @@ if __name__ == "__main__":
                              )
     print(game_object)
 
-    game_object.add_flag("LOCKEDBIT")
-    assert "LOCKEDBIT" in game_object.flags
+    game_object.add_flag_by_name("LOCKEDBIT")
+    assert Flags.LOCKEDBIT in game_object.flags
 
     def custom_action(controller, target: GameObject = game_object, additional_arg="Extra"):
-        target.action_func_name = "custom_action"
+        target.action_method_name = "custom_action"
         if controller.lower() == "open":
-            target.remove_flag("LOCKEDBIT")
+            target.remove_flag_by_name("LOCKEDBIT")
             print(additional_arg)
             return True
         return False
@@ -207,7 +239,7 @@ if __name__ == "__main__":
 
     game_object.action(controller="Open")
 
-    assert "LOCKEDBIT" not in game_object.flags
-    game_object.add_flag("TAKEBIT")
+    assert Flags.LOCKEDBIT not in game_object.flags
+    game_object.add_flag_by_name("TAKEBIT")
 
     print(json.dumps(game_object, indent=4, default=game_object.encode_tojson))
