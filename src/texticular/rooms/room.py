@@ -29,9 +29,6 @@ class Room(GameObject):
 
     """
     room_count = 0
-    @classmethod
-    def decode_fromjson(cls, json):
-        pass
 
     def __init__(self, key_value: str, name: str, descriptions: dict, location_key="Map", flags=None):
         self.times_visited = 0
@@ -67,7 +64,7 @@ class Room(GameObject):
 
         """
         response = ""
-        response += f"You are in the {self.name}: {self.current_description}"
+        response += f"You are in the {self.name}: {super().describe()}"
         response += self.get_exit_descriptions()
         response += "\n\n---Exits---\n\n"
         response += self.list_exits()
@@ -86,7 +83,7 @@ class Room(GameObject):
         """
         response = ''
         for exit_direction in self.exits.keys():
-            exit_description = self.exits[exit_direction].current_description
+            exit_description = self.exits[exit_direction].describe()
             response += (f" To the {exit_direction.name} {exit_description}")
         return response
 
@@ -123,7 +120,7 @@ class Room(GameObject):
             "locationKey": self.location_key,
             "name": self.name,
             "currentDescription": self._current_description,
-            "examine": self._examine_description,
+            "examineDescription": self._examine_description,
             "descriptions": self.descriptions,
             "flags": [flag.name for flag in self.flags],
             "actionMethod": self.action_method_name,

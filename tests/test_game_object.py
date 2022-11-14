@@ -42,11 +42,13 @@ def game_object():
 
 
 def test_canLookAtObject(game_object):
-    assert game_object.describe() == game_object.current_description
+    game_object.describe()
+    assert game_object.current_description == "Main"
 
 
 def test_canExamineObject(game_object):
-    assert game_object.examine() == game_object.examine_description
+    game_object.examine()
+    assert game_object.examine_description == "Examine"
 
 
 def test_canSetDescription(game_object):

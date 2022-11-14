@@ -60,23 +60,27 @@ class GameObject:
         """
         self.id = next(GameObject._objectid)
         self.name = name
+
+        if "Main" not in descriptions:
+            raise KeyError("In addition to other descriptions, the  descriptions dict must contain at "
+                           "least the 'Main' key with a description")
+
         self.descriptions = descriptions
         self.location_key = location_key
         self.flags = set()
         self.action_method_name = None
+
         if flags is None:
             flags = []
         for flag in flags:
             self.add_flag(flag)
 
-        if descriptions.get("Main"):
-            self._current_description = descriptions["Main"]
-        else:
-            self._current_description = self.name
+        self._current_description = "Main"
+
         if descriptions.get("Examine"):
-            self._examine_description = descriptions["Examine"]
+            self._examine_description = "Examine"
         else:
-            self._examine_description = "..."
+            self._examine_description = "Main"
 
         duplicate_object = GameObject.lookup_by_key(key_value)
         if duplicate_object:
@@ -95,14 +99,20 @@ class GameObject:
         return self._current_description
     @current_description.setter
     def current_description(self, descript_key):
-        self._current_description = self.descriptions[descript_key]
+        if self.descriptions.get(descript_key):
+            self._current_description = descript_key
+        else:
+            raise KeyError(f"Key {descript_key} not found in descriptions.")
 
     @property
     def examine_description(self):
         return self._examine_description
     @examine_description.setter
     def examine_description(self, descript_key):
-        self._examine_description = self.descriptions[descript_key]
+        if self.descriptions.get(descript_key):
+            self._examine_description = descript_key
+        else:
+            raise KeyError(f"Key {descript_key} not found in descriptions.")
 
     def describe(self) -> str:
         """Return the current description of the game object
@@ -112,7 +122,7 @@ class GameObject:
         str
             the current description of the game object
         """
-        return self._current_description
+        return self.descriptions[self.current_description]
 
     def examine(self) -> str:
         """Return the more detailed description of the game object
@@ -122,7 +132,7 @@ class GameObject:
         str
             A more detailed description of the game object if one is available
         """
-        return self._examine_description
+        return self.descriptions[self.examine_description]
 
     def move(self, location_key:str):
         """Puts object1 into object2.
@@ -202,7 +212,7 @@ class GameObject:
             "locationKey": self.location_key,
             "name": self.name,
             "currentDescription": self._current_description,
-            "examine": self._examine_description,
+            "examineDescription": self._examine_description,
             "descriptions": self.descriptions,
             "flags": [flag.name for flag in self.flags],
             "actionMethod": self.action_method_name

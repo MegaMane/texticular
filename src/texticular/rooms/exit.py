@@ -50,7 +50,7 @@ class RoomExit(GameObject):
             "connection": self.connection,
             "keyObject": self.key_object,
             "currentDescription": self._current_description,
-            "examine": self._examine_description,
+            "examineDescription": self._examine_description,
             "descriptions": self.descriptions,
             "flags": [flag.name for flag in self.flags],
             "actionMethod": self.action_method_name,
