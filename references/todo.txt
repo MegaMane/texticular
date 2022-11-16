@@ -1,7 +1,53 @@
-can create gameloader
-- can cll readFromFile
--readfrom file returns correct string
-readfromfile throws exception when file doesn't exist
+Feature 1 Player can move freely from room to room and get descriptions of all relevant things in current environment
+Todo
+    Finish initialGameMap.json (port over rooms.json)
+    Load the game map with just rooms & exits
+    Test Wiring up Action function so that description can change based on player action room enter exit func
+    Create the Player Class
+    Test moving the player from room to room manually
+    Test saving and loading the game with the player in different rooms and descriptions changed
+
+Feature 2 Player can pick up items store them in inventory and drop items
+
+Feature 2.5 Room Descriptions now include items/game objects that are visible to the player
+
+Feature 3 Player can unlock doors and containers with the correct key
+
+Feature 4 Player can place and retrieve items locker, chest and other special surfaces/containers
+
+Feature 5 Player can use items and interact with objects in context-sensitive ways (Actions)
+(meaning you can eat the cake but not the couch...but feel free to try)
+
+Feature 6 Player can interact with special items that change the game state (normal input)
+phone keypad vending machine TV etc
+
+Feature 7 Player can Have conversations with other characters which puts the game into a different dialogue state with
+options to pick from instead of free form typing
+Purchase Items from "shops" or vendors which also puts the game into a different menu based interface similar to a dialogue
+
+Feature 8 Save a game in progress, Load and Resume a Game
+
+Feature 9 View a log of previous commands
+Feature 10 Get Hints if they are stuck
+Feature 11 Implement Flask/Web UI
+Feature 12 Add Sound Effects and Splash Screens/visuals
+
+         Need to add these into the feature list
+         ------------------------------------------
+         Load all game object (player, room, item, npc, special derived item classes etc) from json
+         Serialize all those same objects to json and recreate them in their exact state
+         Organize custom object Action functions and wire them up to the proper object on load
+         Associate all the objects that need to be within a room on load
+         * implement parser and main game loop
+         * trigger game events or "cut scenes" and update game state as needed/clocker
+		 * Implement Choices that are remembered in a PlayerChoices collection
+         * equip special items {these don't count in inventory}
+         * create a scoring and stat system
+         * Create wind conditions and game over conditions
+         * fight
+
+
+
 
 Tdd
 oop
@@ -9,3 +55,8 @@ flask/api calls
 sphinx documentation
 python packaging
 json serialization
+
+
+
+
+

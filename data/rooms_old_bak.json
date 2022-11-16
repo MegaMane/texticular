@@ -53,35 +53,44 @@
         "type": "Room",
         "name": "Room 201 - Bathroom",
         "keyValue": "bathroom-room201",
+        "locationKey": "Map",
+        "currentDescription": "Main",
+        "examineDescription": "Main",
         "descriptions": [
             {
                 "label": "Main", 
                 "text": "You crack open the door to the bathroom and it looks like it's seen better days. From the smell of it, it looks like someone beat you to it and narrowly escaped a hard fought battle with an eight pound burrito. The sink is old,yellowed and caked with brown muck in the corners. The mirror is cracked and something is written on it in red. You can't quite make it out. But you don't care...you've gotta take a shit! You rush to be the first in line to make a deposit in the porcelain bank. But just as you are about to drop it like it's hot you notice there is an angry Great Dane guarding the toilet and he looks hungry! You quickly shut the door and somehow manage to not lose your shit (literally). Looks like you have to find somewhere else to go if you value your junk...and your life."
             }
         ],
-        "flags":["CONTAINERBIT","ONBIT"],
+        "flags":[
+            "CONTAINERBIT",
+            "ONBIT"
+        ],
+        "actionMethod": null,
+        "timesVisited": 0,
         "exits": {
             "EAST": {
-                "keyValue":"exits-bathroom-room201",
-                "name":"Door to the bedroom",
-                "descriptions": [
-                    {
-                        "label": "Main", 
-                        "text": "is the DOOR to the Bedroom. Hurry get the fuck out of here before that crazy dog rips out your throat!"
-                    },
-                    {
-                        "label": "SleepyTime", 
-                        "text": "is the DOOR to the Bedroom. The great Dane Sleeps peacefully behind you. Not weird at all."
-                    }
-                ],
-                "locationKey":"bathroom-room201",
-                "connection":"room201",
+                "type": "RoomExit",
+                "keyValue": "exits-bathroom-room201",
+                "locationKey": "bathroom-room201",
+                "name": "Door to the bedroom",
+                "connection": "room201",
                 "keyObject": null,
-                "flags":["DOORBIT","OPENBIT"]
-
+                "currentDescription": "Main",
+                "examineDescription": "Main",
+                "descriptions": {
+                    "Main": "is the DOOR to the Bedroom. Hurry get the fuck out of here before that crazy dog rips out your throat!",
+                    "SleepyTime": "is the DOOR to the Bedroom. The great Dane Sleeps peacefully behind you. Not weird at all."
+                },
+                "flags":[
+                    "DOORBIT",
+                    "OPENBIT"
+                ],
+                "actionMethod": null
             }
-
-        }        
+        },
+        "items": [],
+        "npcs": []
     },
     {
         "type": "Room",

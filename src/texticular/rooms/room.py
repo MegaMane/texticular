@@ -115,7 +115,6 @@ class Room(GameObject):
 
         return {
             "type": self.__class__.__name__,
-            "id": self.id,
             "keyValue": self.key_value,
             "locationKey": self.location_key,
             "name": self.name,

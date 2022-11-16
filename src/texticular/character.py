@@ -1,4 +1,4 @@
-from texticular.game_object import  GameObject
+from texticular.game_object import GameObject
 
 class Character(GameObject):
     pass
