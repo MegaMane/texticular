@@ -41,7 +41,7 @@ class GameObject:
         return cls.objects_by_key .get(key_value)
 
 
-    def __init__(self, key_value: str, name: str, descriptions: dict, location_key=None, flags=None):
+    def __init__(self, key_value: str, name: str, descriptions: dict, location_key: str = None, flags: list = None):
         """The constructor for the GameObject Class
 
         Parameters

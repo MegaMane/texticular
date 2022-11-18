@@ -77,7 +77,11 @@ class Flags(Enum):
 
     # The object is currency and should be added to the players total funds
     # once taken and not show up as an individual item in inventory
-    MONEYBIT = auto
+    MONEYBIT = auto()
+
+    # The object is used as a hack to solve a problem behind the scenes
+    # but not really interacted with by the player
+    KLUDGEBIT = auto()
 
 
 if __name__ == "__main__":
