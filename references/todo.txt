@@ -1,11 +1,11 @@
 Feature 1 Player can move freely from room to room and get descriptions of all relevant things in current environment
 Todo
-    Finish initialGameMap.json (port over rooms.json)
-    Load the game map with just rooms & exits
-    Test Wiring up Action function so that description can change based on player action room enter exit func
-    Create the Player Class
-    Test moving the player from room to room manually
-    Test saving and loading the game with the player in different rooms and descriptions changed
+    x Finish initialGameMap.json (port over rooms.json)
+    x Load the game map with just rooms & exits
+    x Create the Player Class
+    x Test moving the player from room to room manually
+    X Test player can move beteween open doors but not locked
+
 
 Feature 2 Player can pick up items store them in inventory and drop items
 
@@ -17,6 +17,7 @@ Feature 4 Player can place and retrieve items locker, chest and other special su
 
 Feature 5 Player can use items and interact with objects in context-sensitive ways (Actions)
 (meaning you can eat the cake but not the couch...but feel free to try)
+   Test Wiring up Action function so that description can change based on player action room enter exit func
 
 Feature 6 Player can interact with special items that change the game state (normal input)
 phone keypad vending machine TV etc
@@ -26,6 +27,7 @@ options to pick from instead of free form typing
 Purchase Items from "shops" or vendors which also puts the game into a different menu based interface similar to a dialogue
 
 Feature 8 Save a game in progress, Load and Resume a Game
+    Test saving and loading the game with the player in different rooms and descriptions changed
 
 Feature 9 View a log of previous commands
 Feature 10 Get Hints if they are stuck
