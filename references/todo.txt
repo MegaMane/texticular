@@ -8,6 +8,11 @@ Todo
 
 
 Feature 2 Player can pick up items store them in inventory and drop items
+player
+item
+room
+take()
+drop()
 
 Feature 2.5 Room Descriptions now include items/game objects that are visible to the player
 
@@ -15,24 +20,34 @@ Feature 3 Player can unlock doors and containers with the correct key
 
 Feature 4 Player can place and retrieve items locker, chest and other special surfaces/containers
 
-Feature 5 Player can use items and interact with objects in context-sensitive ways (Actions)
+Feature 5 Implement Parser and Main Game Loop
+
+Feature 6 Player can use items and interact with objects in context-sensitive ways (Actions)
 (meaning you can eat the cake but not the couch...but feel free to try)
    Test Wiring up Action function so that description can change based on player action room enter exit func
 
-Feature 6 Player can interact with special items that change the game state (normal input)
+Feature 7 Player can interact with special items that change the game state (normal input)
 phone keypad vending machine TV etc
 
-Feature 7 Player can Have conversations with other characters which puts the game into a different dialogue state with
+Feature 8 Player can Have conversations with other characters which puts the game into a different dialogue state with
 options to pick from instead of free form typing
 Purchase Items from "shops" or vendors which also puts the game into a different menu based interface similar to a dialogue
 
-Feature 8 Save a game in progress, Load and Resume a Game
+Feature 9 Save a game in progress, Load and Resume a Game
     Test saving and loading the game with the player in different rooms and descriptions changed
 
-Feature 9 View a log of previous commands
-Feature 10 Get Hints if they are stuck
-Feature 11 Implement Flask/Web UI
-Feature 12 Add Sound Effects and Splash Screens/visuals
+Feature 10 View a log of previous commands
+Feature 11 Get Hints if they are stuck
+Feature 12 Implement Flask/Web UI
+Feature 13 Add Sound Effects and Splash Screens/visuals
+
+idea
+Newspaper with phone number or some other story clue/puzzle piece embedded in it surrounded by current headlines
+loaded from google news api scrapes each time program runs
+
+https://thecleverprogrammer.com/2021/05/10/scrape-trending-news-using-python/
+https://pypi.org/project/GoogleNews/
+
 
          Need to add these into the feature list
          ------------------------------------------

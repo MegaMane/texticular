@@ -13,15 +13,27 @@ class Inventory(GameObject):
         self.items = []
 
     def add_item(self, item: StoryItem) -> bool:
-        if isinstance(item, StoryItem):
-            if item.size + self.slots_occupied <= self.slots:
-                self.slots_occupied += item.size
-                self.items.append(item)
-                return True
-            return False
-        else:
-            raise ValueError ("You can't put a non-story item into a container")
+        if item.size + self.slots_occupied <= self.slots:
+            self.slots_occupied += item.size
+            self.items.append(item)
+            return True
+        return False
 
+    def remove_item(self, item: StoryItem) -> bool:
+        if item in self.items:
+            self.slots_occupied -= item.size
+            self.items.remove(item)
+            return True
+        return False
+
+    def describe(self) -> str:
+        response = ""
+        response += f"{self.name}: {self.current_description}"
+        response += "\n" + ("-" * (len(self.name) + len(self.current_description) + 2)) + "\n\n"
+        for item in self.items:
+            response += f"{item}: {item.current_description}\n\n"
+
+        return response
 
 
 
@@ -85,12 +97,12 @@ class Player(Character):
         str: response
 
         """
-        print("do walk called")
+        # print("do walk called")
         obj = GameObject.objects_by_key[self.location_key]
         if isinstance(obj, Room):
             room = obj
             exit = room.exits.get(direction)
-            print(exit.name)
+            # print(exit.name)
             if exit:
                 if Flags.LOCKEDBIT not in exit.flags:
                     #Everything is good move the player

@@ -1,5 +1,6 @@
 from texticular.items.story_item import StoryItem
 from texticular.game_enums import Flags
+from texticular.game_object import GameObject
 
 
 def test_story_item():

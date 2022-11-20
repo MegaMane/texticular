@@ -1,9 +1,9 @@
 import json
-import texticular.globals
 from texticular.game_enums import Flags, Directions
 from texticular.items.story_item import StoryItem
 from texticular.rooms.room import Room
 from texticular.rooms.exit import  RoomExit
+from texticular.character import Player, Inventory, NPC
 
 
 
@@ -113,6 +113,27 @@ def load_game_objects(config_file_path):
         decoded_item = decode_story_item_fromjson(item)
         storyitems[decoded_item.key_value] = decoded_item
     return storyitems
+
+def load_player():
+    inventory = Inventory(
+        key_value="player-inventory",
+        name="Backpack",
+        descriptions={"Main": "Your trusty black backpack."},
+        location_key="Player"
+
+    )
+    player = Player(
+        key_value="player",
+        name="Jon",
+        descriptions= {"Main": "An Angry nerd with delusions of grandeur."},
+        sex = "Male",
+        location_key=("room201"),
+        flags=[Flags.PLAYERBIT],
+        inventory=inventory
+    )
+
+    return player
+
 
 
 
