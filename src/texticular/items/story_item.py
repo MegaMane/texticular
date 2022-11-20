@@ -32,6 +32,17 @@ class StoryItem(GameObject):
             "actionMethod": self.action_method_name
         }
 
+    def is_present(self, room) -> bool:
+        """Check if the item is present in the provided location or
+         any open containers in the provided location and visible
+
+        Parameters
+        ----------
+        room: Room
+            The room to search for the item
+        """
+        return (self.location_key == room.key_value and Flags.INVISIBLE not in self.flags )
+
 if __name__ == "__main__":
     import json
     masterKey = StoryItem(

@@ -9,44 +9,64 @@ if TYPE_CHECKING:
     from texticular.game_controller import Controller
 
 
-def look(controller:Controller):
-    pass
+def look(controller: Controller):
+    controller.response += controller.player.location.describe()
+    return True
 
-def walk(controller:Controller):
+
+def walk(controller: Controller):
     walk_direction = controller.tokens.direct_object_key
     controller.response += controller.player.do_walk(walk_direction)
     return True
 
-def take(controller: Controller):
-    direct_object = controller.tokens.direct_object
-    #TODO
-    # Check if the item is visible
-    # Check if the item is in the same location as the player (or in a container in that location)
 
+def take(controller: Controller):
+    item = controller.tokens.direct_object
     inventory = controller.player.inventory
 
-    if Flags.TAKEBIT in direct_object.flags:
-        item = controller.tokens.direct_object
-        item_taken = inventory.add_item(item)
-        if item_taken:
-            item.move(inventory.location_key)
-            item.current_description = "Main"
-            controller.response += "Taken."
-            return True
+    if item.is_present(controller.player.location):
+        # TODO
+        # Change item.is_present to check if the item is present in any open containers in the players current location
+
+        if Flags.TAKEBIT in item.flags:
+
+            item_taken = inventory.add_item(item)
+            if item_taken:
+                controller.player.location.items.remove(item.key_value)
+                item.move(inventory.location_key)
+                item.current_description = "Main"
+                controller.response += "Taken."
+                return True
+            else:
+                controller.response += (f"The  {item.name} won't fit in your {inventory.name}! "
+                                        f"Try dropping something if you really want it.")
         else:
-            controller.response += (f"The  {direct_object.name} won't fit in your {inventory.name}! "
-                                    f"Try dropping something if you really want it.")
+            controller.response += f"The {item.name} won't budge."
+
+        return False
     else:
-        controller.response += (f"The {direct_object.name} won't budge." )
+        controller.response += f"You don't see a {item.name} here!"
+        return False
 
-    return False
 
-def drop(controller):
-    pass
+def drop(controller: Controller):
+    item = controller.tokens.direct_object
+    inventory = controller.player.inventory
+    if inventory.remove_item(item):
+        item.move(controller.player.location_key)
+        controller.player.location.items.append(item.key_value)
+        item.current_description = "Dropped" if item.descriptions.get("Dropped") else "Main"
+        controller.response += "Dropped it like it's hot."
+        return True
+    else:
+        controller. response += f"You don't have a {item.name} to drop."
+        return False
+
 
 def inventory(controller: Controller):
     controller.response += controller.player.inventory.describe()
     return True
 
-def talke(controller):
+
+def talk(controller):
     pass

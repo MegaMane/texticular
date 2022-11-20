@@ -28,11 +28,10 @@ class Controller:
         self.tokens = self.Tokens("", "", None, "", None)
         self.gamestate = GameStates.EXPLORATION
         self.player = player
-        self.player_location = GameObject.objects_by_key.get(self.player.location_key)
 
 
     def go(self):
-        return self.player_location.describe()
+        return self.player.location.describe()
     def handle_input(self) ->bool:
         tokens = self.tokens
         # print("handle input called")
@@ -85,7 +84,10 @@ class Controller:
         pass
 
     def set_commands(self):
-        self.commands["take"] = va.take
+        self.commands["look"] = va.look
         self.commands["walk"] = va.walk
+        self.commands["get"] = va.take
+        self.commands["take"] = va.take
+        self.commands["drop"] = va.drop
         self.commands["inventory"] = va.inventory
 

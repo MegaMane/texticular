@@ -1,3 +1,5 @@
+"""responsible for loading and saving game objects to and from json"""
+
 import json
 from texticular.game_enums import Flags, Directions
 from texticular.items.story_item import StoryItem
@@ -127,7 +129,7 @@ def load_player():
         key_value="player-inventory",
         name="Backpack",
         descriptions={"Main": "Your trusty black backpack."},
-        location_key="Player"
+        location_key="player"
 
     )
     player = Player(

@@ -16,6 +16,7 @@ class Inventory(GameObject):
         if item.size + self.slots_occupied <= self.slots:
             self.slots_occupied += item.size
             self.items.append(item)
+            item.location_key = self.key_value
             return True
         return False
 
@@ -23,6 +24,7 @@ class Inventory(GameObject):
         if item in self.items:
             self.slots_occupied -= item.size
             self.items.remove(item)
+            item.location_key = None
             return True
         return False
 
@@ -45,6 +47,7 @@ class Character(GameObject):
         self.hp = hp
         self.sex = sex
         self.inventory = inventory
+        self.location = GameObject.objects_by_key.get(self.location_key)
 
 
 class Player(Character):
@@ -76,6 +79,7 @@ class Player(Character):
             # call rooms action routine
             # call describers
             self.location_key = location_key
+            self.location = GameObject.objects_by_key.get(location_key)
             return target_location.describe()
         else:
             raise ValueError("Invalid Location Key")

@@ -14,7 +14,9 @@ room
 take()
 drop()
 
-Feature 2.5 Room Descriptions now include items/game objects that are visible to the player
+Containers player can take and put items from open containers
+
+Feature 2.5 Room Descriptions now only include items/game objects that are visible to the player
 
 Feature 3 Player can unlock doors and containers with the correct key
 
