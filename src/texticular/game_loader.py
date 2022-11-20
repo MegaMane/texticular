@@ -105,14 +105,22 @@ def load_game_map(config_file_path):
         gamemap[decoded_room.key_value] = decoded_room
     return gamemap
 
-def load_game_objects(config_file_path):
+def load_game_objects(gamemap, config_file_path):
     config = load_json(config_file_path)
     storyitems = {}
     for item in config["items"]:
         #print(json.dumps(item, indent=4))
         decoded_item = decode_story_item_fromjson(item)
+        add_item_reference_to_room(gamemap, decoded_item)
         storyitems[decoded_item.key_value] = decoded_item
     return storyitems
+
+def add_item_reference_to_room(gamemap, decoded_item):
+    item_location = gamemap.get(decoded_item.location_key)
+    if item_location:
+        item_location.items.append(decoded_item.key_value)
+        return True
+    return False
 
 def load_player():
     inventory = Inventory(
@@ -142,11 +150,12 @@ def load_player():
 
 if __name__ ==  "__main__":
     gamemap = load_game_map("./../../data/initialGameMap.json")
-    storyitems = load_game_objects("./../../data/items.json")
+    storyitems = load_game_objects(gamemap,"./../../data/items.json")
     #print(json.dumps(config, indent=4))
 
 
         #print(json.dumps(decoded_room, indent=4, default=decoded_room.encode_tojson))
     print(gamemap.keys())
+    print(gamemap["room201"].items)
     encode_rooms_tojson(gamemap, save_file_path="../../data/initialGameMap.json")
     encode_story_items_tojson(storyitems, save_file_path="../../data/items.json")

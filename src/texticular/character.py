@@ -28,10 +28,10 @@ class Inventory(GameObject):
 
     def describe(self) -> str:
         response = ""
-        response += f"{self.name}: {self.current_description}"
-        response += "\n" + ("-" * (len(self.name) + len(self.current_description) + 2)) + "\n\n"
+        response += f"{self.name}: {super().describe()}"
+        response += "\n" + ("-" * (len(self.name) + len(super().describe()) + 2)) + "\n\n"
         for item in self.items:
-            response += f"{item}: {item.current_description}\n\n"
+            response += f"{item.name}: {item.describe()}"
 
         return response
 

@@ -19,6 +19,29 @@
                 "KLUDGEBIT"
             ],
             "actionMethod": null
+        },
+        {
+            "type": "StoryItem",
+            "keyValue": "intro-note",
+            "locationKey": "room201",
+            "name": "note",
+            "synonyms": [
+                "letter"
+            ],
+            "adjectives": [],
+            "currentDescription": "Room",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Room": "On the floor you see a small folded piece of paper, looks like a note.",
+                "Main": "A small folded note with some sloppy handwriting on it, you can still read it though...",
+                "Lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum erat at ultricies sagittis. Quisque tincidunt, dolor at congue tempor, urna nibh finibus metus, sit amet lobortis dolor leo dignissim ligula. Maecenas nibh orci, feugiat eu dictum ac, fermentum et orci. Vivamus aliquet mattis urna eget euismod. Donec ac sagittis odio, nec gravida sem. Aenean congue neque ut libero tempus varius. Phasellus metus ipsum, scelerisque ac dictum tristique, sodales vitae dui. Donec sit amet nibh quis quam elementum lobortis.",
+                "Dropped": "There is a crumpled note on the floor here."
+            },
+            "size": 1,
+            "flags": [
+                "TAKEBIT"
+            ],
+            "actionMethod": null
         }
     ]
 }

@@ -65,6 +65,7 @@ class Room(GameObject):
         """
         response = ""
         response += f"You are in the {self.name}: {super().describe()}"
+        response += self.get_item_descriptions()
         response += self.get_exit_descriptions()
         response += "\n\n---Exits---\n\n"
         response += self.list_exits()
@@ -96,8 +97,11 @@ class Room(GameObject):
         response += "\n\n"
         return response
 
-    def get_items(self):
-        pass
+    def get_item_descriptions(self):
+        response = ''
+        for item in self.items:
+            response += " " + GameObject.objects_by_key.get(item).describe()
+        return response
 
     def get_npcs(self):
         pass

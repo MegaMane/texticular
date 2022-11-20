@@ -38,6 +38,9 @@ class Flags(Enum):
     # The object is a container; thing can be put inside it, it can be opened and closed
     CONTAINERBIT = auto()
 
+    # The object is currently invisible to the player
+    INVISIBLE = auto()
+
     # The object is a surface, such as a table, desk, countertop etc. Any object with SURFACEBIT
     # should have CONTAINERBIT and OPENBIT since you can put thing on the surface but you cant close a counter
     # like you can a box

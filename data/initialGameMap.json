@@ -55,7 +55,9 @@
                     "actionMethod": null
                 }
             },
-            "items": [],
+            "items": [
+                "intro-note"
+            ],
             "npcs": []
         },
         {

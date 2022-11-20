@@ -19,23 +19,34 @@ def walk(controller:Controller):
 
 def take(controller: Controller):
     direct_object = controller.tokens.direct_object
+    #TODO
+    # Check if the item is visible
+    # Check if the item is in the same location as the player (or in a container in that location)
+
     inventory = controller.player.inventory
 
     if Flags.TAKEBIT in direct_object.flags:
-        item_taken = inventory.add_item(controller.tokens.direct_object)
+        item = controller.tokens.direct_object
+        item_taken = inventory.add_item(item)
         if item_taken:
-            return "Taken."
+            item.move(inventory.location_key)
+            item.current_description = "Main"
+            controller.response += "Taken."
+            return True
         else:
-            return (f"The  {direct_object.name} won't fit in your {inventory.name}! "
-                    f"Try dropping something if you really want it.")
+            controller.response += (f"The  {direct_object.name} won't fit in your {inventory.name}! "
+                                    f"Try dropping something if you really want it.")
     else:
-        return (f"The {direct_object.name} won't budge." )
+        controller.response += (f"The {direct_object.name} won't budge." )
+
+    return False
 
 def drop(controller):
     pass
 
-def inventory(controller):
-    pass
+def inventory(controller: Controller):
+    controller.response += controller.player.inventory.describe()
+    return True
 
 def talke(controller):
     pass

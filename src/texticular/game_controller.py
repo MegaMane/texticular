@@ -1,5 +1,5 @@
 import texticular.actions.verb_actions as va
-from texticular.game_object import  GameObject
+from texticular.game_object import GameObject
 from texticular.rooms.room import Room
 from texticular.game_enums import Directions
 from texticular.character import Player,NPC
@@ -48,20 +48,20 @@ class Controller:
 
         #Try letting the indirect object handle the input first
         if indirect_object:
-            target_object = self.game_objects[indirect_object]
-            action = target_object.commands.get("Action")
-            if action:
+            target_object = self.tokens.indirect_object
+            custom_action_method_exists = target_object.action_method_name
+            if custom_action_method_exists:
                 print("indirect object handler")
-                if action(self, target=target_object):
+                if target_object.action(controller=self, target=target_object):
                     return True
 
         #If that doesn't work try giving the direct object a change to handle the input
         if direct_object:
-            target_object = self.game_objects[direct_object]
-            action = target_object.commands.get("Action")
-            if action:
+            target_object = self.tokens.direct_object
+            custom_action_method_exists = target_object.action_method_name
+            if custom_action_method_exists:
                 print("direct object handler")
-                if action(self, target=target_object):
+                if target_object.action(controller=self, target=target_object):
                     return True
 
         # fall through to the most generic verb response
@@ -69,7 +69,7 @@ class Controller:
         return self.commands[verb](controller=self)
 
     def get_input(self):
-        pass
+        self.response = ""
     def parse(self) ->bool:
         return True
     def update(self):
@@ -77,7 +77,7 @@ class Controller:
             self.handle_input()
             self.clocker()
     def render(self):
-        return self.response + "\n--------------------------------------------------------"
+        return self.response
 
     def clocker(self):
         pass
@@ -87,4 +87,5 @@ class Controller:
     def set_commands(self):
         self.commands["take"] = va.take
         self.commands["walk"] = va.walk
+        self.commands["inventory"] = va.inventory
 
