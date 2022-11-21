@@ -1,41 +1,7 @@
 from texticular.game_object import GameObject
-from texticular.items.story_item import StoryItem
+from texticular.items.story_item import Inventory
 from texticular.rooms.room import Room
 from texticular.game_enums import Flags, Directions
-
-
-class Inventory(GameObject):
-    def __init__(self, key_value: str, name: str, descriptions: dict,
-                 slots: int = 10, location_key: str = None, flags: list = None):
-        super().__init__(key_value, name, descriptions, location_key, flags)
-        self.slots = slots
-        self.slots_occupied = 0
-        self.items = []
-
-    def add_item(self, item: StoryItem) -> bool:
-        if item.size + self.slots_occupied <= self.slots:
-            self.slots_occupied += item.size
-            self.items.append(item)
-            item.location_key = self.key_value
-            return True
-        return False
-
-    def remove_item(self, item: StoryItem) -> bool:
-        if item in self.items:
-            self.slots_occupied -= item.size
-            self.items.remove(item)
-            item.location_key = None
-            return True
-        return False
-
-    def describe(self) -> str:
-        response = ""
-        response += f"{self.name}: {super().describe()}"
-        response += "\n" + ("-" * (len(self.name) + len(super().describe()) + 2)) + "\n\n"
-        for item in self.items:
-            response += f"{item.name}: {item.describe()}"
-
-        return response
 
 
 
@@ -120,13 +86,13 @@ class Player(Character):
                             exit.add_flag("OPENBIT")
                             self.inventory.remove(item, exit.key_value)
 
-                            return f"The {exit.name} opens with the {key_name}." + self.go_to(exit.connection)
+                            return [f"The {exit.name} opens with the {key_name}." + self.go_to(exit.connection)]
 
-                    return f"The {exit.name} is locked and you don't have the {key_name}."
+                    return [f"The {exit.name} is locked and you don't have the {key_name}."]
             else:
-                return "There isn't an exit in that direction!"
+                return ["There isn't an exit in that direction!"]
         else:
-            return f"You can't do that from the {obj.name}!"
+            return [f"You can't do that from the {obj.name}!"]
 
 
 

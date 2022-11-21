@@ -5,6 +5,7 @@ from texticular.game_enums import Directions
 from texticular.character import Player,NPC
 from dataclasses import dataclass
 from texticular.game_enums import GameStates
+import textwrap
 
 class Controller:
     # def __new__(cls, gamemap: dict, player: Player):
@@ -23,7 +24,7 @@ class Controller:
         self.gamemap = gamemap
         self.commands = {}
         self.globals = {}
-        self.response = ""
+        self.response = []
         self.set_commands()
         self.tokens = self.Tokens("", "", None, "", None)
         self.gamestate = GameStates.EXPLORATION
@@ -31,7 +32,28 @@ class Controller:
 
 
     def go(self):
-        return self.player.location.describe()
+        #https://patorjk.com/software/taag/#p=display&v=1&f=Standard&t=Texticular%3A%20Chapter%201%0AYou%20Gotta%20Go!
+        #'Standard' Font
+        intro_text = (
+            """
+  _____         _   _            _                 ____ _                 _              _ 
+ |_   _|____  _| |_(_) ___ _   _| | __ _ _ __ _   / ___| |__   __ _ _ __ | |_ ___ _ __  / |
+   | |/ _ \ \/ / __| |/ __| | | | |/ _` | '__(_) | |   | '_ \ / _` | '_ \| __/ _ \ '__| | |
+   | |  __/>  <| |_| | (__| |_| | | (_| | |   _  | |___| | | | (_| | |_) | ||  __/ |    | |
+   |_|\___/_/\_\\__|_|\___|\__,_|_| \__,_|_|  (_)  \____|_| |_|\__,_| .__/ \__\___|_|    |_|
+ __   __             ____       _   _           ____       _       |_|                     
+ \ \ / /__  _   _   / ___| ___ | |_| |_ __ _   / ___| ___ | |                              
+  \ V / _ \| | | | | |  _ / _ \| __| __/ _` | | |  _ / _ \| |                              
+   | | (_) | |_| | | |_| | (_) | |_| || (_| | | |_| | (_) |_|                              
+   |_|\___/ \__,_|  \____|\___/ \__|\__\__,_|  \____|\___/(_)                              
+                                                                                           
+            """
+
+        )
+
+        print(intro_text)
+        self.commands["look"](self)
+        return self.render()
     def handle_input(self) ->bool:
         tokens = self.tokens
         # print("handle input called")
@@ -68,7 +90,7 @@ class Controller:
         return self.commands[verb](controller=self)
 
     def get_input(self):
-        self.response = ""
+        self.response = []
     def parse(self) ->bool:
         return True
     def update(self):
@@ -76,7 +98,23 @@ class Controller:
             self.handle_input()
             self.clocker()
     def render(self):
-        return self.response
+        formatted_output = ''
+        for line in self.response:
+            if line.endswith("\n"):
+                formatted_output += line
+            else:
+                formatted_output += "\n".join(
+                    textwrap.wrap(
+                        line,
+                        width=150,
+                        replace_whitespace=False,
+                        break_long_words=False,
+                        break_on_hyphens=False
+                    )
+                )
+
+        formatted_output += f'\n\n{"-" * 150}'
+        return formatted_output
 
     def clocker(self):
         pass

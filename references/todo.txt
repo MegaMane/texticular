@@ -15,6 +15,10 @@ take()
 drop()
 
 Containers player can take and put items from open containers
+TODO
+    Left off working on container
+    encode/decode (player w inventory) container from json
+    modify take and look verb actions to deal with checking for open containers
 
 Feature 2.5 Room Descriptions now only include items/game objects that are visible to the player
 

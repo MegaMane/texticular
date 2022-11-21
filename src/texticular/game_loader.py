@@ -2,10 +2,10 @@
 
 import json
 from texticular.game_enums import Flags, Directions
-from texticular.items.story_item import StoryItem
+from texticular.items.story_item import StoryItem, Inventory
 from texticular.rooms.room import Room
 from texticular.rooms.exit import  RoomExit
-from texticular.character import Player, Inventory, NPC
+from texticular.character import Player, NPC
 
 
 
@@ -129,7 +129,8 @@ def load_player():
         key_value="player-inventory",
         name="Backpack",
         descriptions={"Main": "Your trusty black backpack."},
-        location_key="player"
+        location_key="player",
+        synonyms=["Bag", "Inventory"]
 
     )
     player = Player(

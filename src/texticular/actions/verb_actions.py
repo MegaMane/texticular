@@ -10,13 +10,13 @@ if TYPE_CHECKING:
 
 
 def look(controller: Controller):
-    controller.response += controller.player.location.describe()
+    controller.response.extend(controller.player.location.describe())
     return True
 
 
 def walk(controller: Controller):
     walk_direction = controller.tokens.direct_object_key
-    controller.response += controller.player.do_walk(walk_direction)
+    controller.response.extend(controller.player.do_walk(walk_direction))
     return True
 
 
@@ -35,17 +35,17 @@ def take(controller: Controller):
                 controller.player.location.items.remove(item.key_value)
                 item.move(inventory.location_key)
                 item.current_description = "Main"
-                controller.response += "Taken."
+                controller.response.append("Taken.")
                 return True
             else:
-                controller.response += (f"The  {item.name} won't fit in your {inventory.name}! "
-                                        f"Try dropping something if you really want it.")
+                controller.response.append((f"The  {item.name} won't fit in your {inventory.name}! "
+                                            f"Try dropping something if you really want it."))
         else:
-            controller.response += f"The {item.name} won't budge."
+            controller.response.append(f"The {item.name} won't budge.")
 
         return False
     else:
-        controller.response += f"You don't see a {item.name} here!"
+        controller.response.append(f"You don't see a {item.name} here!")
         return False
 
 
@@ -56,15 +56,15 @@ def drop(controller: Controller):
         item.move(controller.player.location_key)
         controller.player.location.items.append(item.key_value)
         item.current_description = "Dropped" if item.descriptions.get("Dropped") else "Main"
-        controller.response += "Dropped it like it's hot."
+        controller.response.append("Dropped it like it's hot.")
         return True
     else:
-        controller. response += f"You don't have a {item.name} to drop."
+        controller.response.append(f"You don't have a {item.name} to drop.")
         return False
 
 
 def inventory(controller: Controller):
-    controller.response += controller.player.inventory.describe()
+    controller.response.extend(controller.player.inventory.look_inside())
     return True
 
 

@@ -63,12 +63,14 @@ class Room(GameObject):
             The main description for the room
 
         """
-        response = ""
-        response += f"You are in the {self.name}: {super().describe()}"
-        response += self.get_item_descriptions()
-        response += self.get_exit_descriptions()
-        response += "\n\n---Exits---\n\n"
-        response += self.list_exits()
+        main_description = ''
+        response = []
+        main_description += f"You are in the {self.name}: {super().describe()}"
+        main_description += self.get_item_descriptions()
+        main_description += self.get_exit_descriptions()
+        response.append(main_description)
+        response.append("\n\n---Exits---\n\n")
+        response.extend(self.list_exits())
         return response
 
     def get_exit_descriptions(self) -> str:
@@ -90,11 +92,10 @@ class Room(GameObject):
 
 
     def list_exits(self) -> str:
-        response = ''
+        response = []
         for exit_direction in self.exits.keys():
             exit_description = self.exits[exit_direction].name
-            response += (f"To the {exit_direction.name} is the {exit_description}\n")
-        response += "\n\n"
+            response.append(f"To the {exit_direction.name} is the {exit_description}\n")
         return response
 
     def get_item_descriptions(self):

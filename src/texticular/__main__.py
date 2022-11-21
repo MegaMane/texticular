@@ -25,7 +25,7 @@ def display(output):
     print("\n".join(textwrap.wrap(output, width=150, replace_whitespace=False, break_long_words=False, break_on_hyphens=False)))
     print("-" * 150)
 
-display(controller.go())
+
 
 walk_commands = [
     {
@@ -95,6 +95,7 @@ walk_commands = [
 
 test_walk = input_generator(walk_commands)
 
+print(controller.go())
 while controller.gamestate.name != "GAMEOVER":
     controller.get_input()
     try:
@@ -106,7 +107,7 @@ while controller.gamestate.name != "GAMEOVER":
         controller.tokens.indirect_object_key = tokens["indirect_object_key"]
         controller.update()
         display(tokens["user_input"])
-        display(controller.render())
+        print(controller.render())
         #print(controller.render())
     except StopIteration:
         print("Reached End of Command Sequence")
