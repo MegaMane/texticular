@@ -32,7 +32,7 @@ def take(controller: Controller):
 
             item_taken = inventory.add_item(item)
             if item_taken:
-                controller.player.location.items.remove(item.key_value)
+                controller.player.location.items.remove(item)
                 item.move(inventory.location_key)
                 item.current_description = "Main"
                 controller.response.append("Taken.")
@@ -54,7 +54,7 @@ def drop(controller: Controller):
     inventory = controller.player.inventory
     if inventory.remove_item(item):
         item.move(controller.player.location_key)
-        controller.player.location.items.append(item.key_value)
+        controller.player.location.items.append(item)
         item.current_description = "Dropped" if item.descriptions.get("Dropped") else "Main"
         controller.response.append("Dropped it like it's hot.")
         return True

@@ -1,13 +1,12 @@
-from game_controller import  Controller
+from game_controller import Controller
 import textwrap
 #These imports should go away after testing
-from texticular.game_loader import load_game_map, load_story_items, load_player, load_containers
+from texticular.game_loader import load_player, load_game_map
 from texticular.game_enums import Directions
 from texticular.game_object import GameObject
 
-gamemap = load_game_map("./../../data/initialGameMap.json")
-storyitems = load_story_items(gamemap, "./../../data/items.json")
-containers = load_containers("./../../data/items.json")
+
+gamemap = load_game_map("./../../data/newGameManifest.json")
 player = load_player()
 
 controller = Controller(gamemap, player)
@@ -21,11 +20,6 @@ def input_generator(input_commands):
 def parse(input_generator):
     """Generate perfectly parsed input for testing"""
     return next(input_generator)
-
-def display(output):
-    print("\n".join(textwrap.wrap(output, width=150, replace_whitespace=False, break_long_words=False, break_on_hyphens=False)))
-    print("-" * 150)
-
 
 
 walk_commands = [
@@ -107,7 +101,7 @@ while controller.gamestate.name != "GAMEOVER":
         controller.tokens.indirect_object = tokens["indirect_object"]
         controller.tokens.indirect_object_key = tokens["indirect_object_key"]
         controller.update()
-        display(tokens["user_input"])
+        print(tokens["user_input"])
         print(controller.render())
         #print(controller.render())
     except StopIteration:

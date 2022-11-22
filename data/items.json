@@ -1,97 +1,98 @@
 {
-  "items": [
-    {
-      "type": "StoryItem",
-      "keyValue": "masterKey",
-      "locationKey": "nowhereLand",
-      "name": "Master Key",
-      "synonyms": [
-        "Bad Mother Fuckin' Key"
-      ],
-      "adjectives": [],
-      "currentDescription": "Main",
-      "examineDescription": "Main",
-      "descriptions": {
-        "Main": "The key that opens every door"
-      },
-      "size": 1,
-      "flags": [
-        "KLUDGEBIT"
-      ],
-      "actionMethod": null
-    },
-    {
-      "type": "StoryItem",
-      "keyValue": "intro-note",
-      "locationKey": "room201",
-      "name": "note",
-      "synonyms": [
-        "letter"
-      ],
-      "adjectives": [],
-      "currentDescription": "StartingRoom",
-      "examineDescription": "Main",
-      "descriptions": {
-        "StartingRoom": "On the floor you see a small folded piece of paper, looks like a note.",
-        "Main": "A small folded note with some sloppy handwriting on it, you can still read it though...",
-        "Dropped": "There is a crumpled note on the floor here."
-      },
-      "size": 1,
-      "flags": [
-        "TAKEBIT"
-      ],
-      "actionMethod": null
-    },
-    {
-      "type": "Container",
-      "keyValue": "room201-nightStand",
-      "locationKey": "room201",
-      "name": "Stand",
-      "synonyms": [
-        "Table"
-      ],
-      "adjectives": [
-        "Beat Up",
-        "Night"
-      ],
-      "currentDescription": "Main",
-      "examineDescription": "Main",
-      "descriptions": {
-        "Main": "A beat up night stand with a little drawer built into it and black rotary phone on top"
-      },
-      "slots": 10,
-      "keyObject": null,
-      "itemKeyValues": [
-        "room201-earPlugs"
-      ],
-      "flags": [
-        "CONTAINERBIT",
-        "SETPIECEBIT"
-      ],
-      "actionMethod": null
-    },
-    {
-      "type": "StoryItem",
-      "keyValue": "room201-earPlugs",
-      "locationKey": "room201-nightStand",
-      "name": "Ear Plugs",
-      "synonyms": [
-        "Plugs"
-      ],
-      "adjectives": [
-        "Crusty",
-        "Yellow"
-      ],
-      "currentDescription": "Main",
-      "examineDescription": "Main",
-      "descriptions": {
-        "Main": "Some well loved yellow ear plugs, they smell kinda funky but they still work."
-      },
-      "size": 1,
-      "flags": [
-        "TAKEBIT"
-      ],
-      "actionMethod": null
-    }
-  ]
+    "items": [
+        {
+            "type": "StoryItem",
+            "keyValue": "masterKey",
+            "locationKey": "nowhereLand",
+            "name": "Master Key",
+            "synonyms": [
+                "Bad Mother Fuckin' Key"
+            ],
+            "adjectives": [],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "The key that opens every door"
+            },
+            "size": 1,
+            "flags": [
+                "KLUDGEBIT"
+            ],
+            "actionMethod": null
+        },
+        {
+            "type": "StoryItem",
+            "keyValue": "intro-note",
+            "locationKey": "room201",
+            "name": "note",
+            "synonyms": [
+                "letter"
+            ],
+            "adjectives": [],
+            "currentDescription": "StartingRoom",
+            "examineDescription": "Main",
+            "descriptions": {
+                "StartingRoom": "On the floor you see a small folded piece of paper, looks like a note.",
+                "Main": "A small folded note with some sloppy handwriting on it, you can still read it though...",
+                "Dropped": "There is a crumpled note on the floor here."
+            },
+            "size": 1,
+            "flags": [
+                "TAKEBIT"
+            ],
+            "actionMethod": null
+        },
+        {
+            "type": "StoryItem",
+            "keyValue": "crustyEarPlugs",
+            "locationKey": "room201-nightStand",
+            "name": "Ear Plugs",
+            "synonyms": [
+                "Plugs"
+            ],
+            "adjectives": [
+                "Crusty",
+                "Yellow"
+            ],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "Some well loved yellow ear plugs, they smell kinda funky but they still work."
+            },
+            "size": 1,
+            "flags": [
+                "TAKEBIT"
+            ],
+            "actionMethod": null
+        },
+        {
+            "type": "Container",
+            "keyValue": "room201-nightStand",
+            "locationKey": "room201",
+            "name": "Stand",
+            "synonyms": [
+                "Table"
+            ],
+            "adjectives": [
+                "Beat Up",
+                "Night"
+            ],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "A beat up night stand with a little drawer built into it and black rotary phone on top"
+            },
+            "slots": 10,
+            "size": 99,
+            "keyObject": null,
+            "itemKeyValues": [
+                "crustyEarPlugs"
+            ],
+            "flags": [
+                "CONTAINERBIT",
+                "SETPIECEBIT"
+            ],
+            "actionMethod": null
+        }
+    ]
 }

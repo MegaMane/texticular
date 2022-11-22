@@ -1,4 +1,4 @@
-from texticular.game_loader import load_game_map, load_story_items
+from texticular.game_loader import load_game_rooms, load_story_items
 from texticular.character import Player, Inventory
 from texticular.game_object import GameObject
 from texticular.game_enums import Directions, Flags
@@ -11,7 +11,7 @@ def text_wrap(string_to_format):
 
 @pytest.fixture(scope="module")
 def game_map():
-    gamemap = load_game_map("../data/testMovementGameMap.json")
+    gamemap = load_game_rooms("../data/testMovementGameMap.json")
     load_story_items("../data/testItems.json")
     return gamemap
 

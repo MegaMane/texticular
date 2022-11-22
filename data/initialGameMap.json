@@ -11,8 +11,8 @@
                 "Main": "As you look around the hotel room you see an old TV with rabbit ears that looks like it came straight out of the 1950's. Against the wall there is a beat up night stand with a little drawer built into it and black rotary phone on top. Next to it is a lumpy old bed that looks like it's seen better days, with a dark brown stain on the sheets and a funny smell coming from it. There is an obnoxious orange couch in the corner next to a small window smudged with sticky purple hand prints. The stuffing is coming out of the cushions which are also spotted with purple, and the floor is covered with cans of Fast Eddie's Colon Cleanse."
             },
             "flags": [
-                "ONBIT",
-                "CONTAINERBIT"
+                "CONTAINERBIT",
+                "ONBIT"
             ],
             "actionMethod": null,
             "timesVisited": 0,
@@ -55,7 +55,8 @@
                     "actionMethod": null
                 }
             },
-            "items": [
+            "itemKeyValues": [
+                "room201-nightStand",
                 "intro-note"
             ],
             "npcs": []
@@ -71,8 +72,8 @@
                 "Main": "You crack open the door to the bathroom and it looks like it's seen better days. From the smell of it, it looks like someone beat you to it and narrowly escaped a hard fought battle with an eight pound burrito. The sink is old,yellowed and caked with brown muck in the corners. The mirror is cracked and something is written on it in red. You can't quite make it out. But you don't care...you've gotta take a shit! You rush to be the first in line to make a deposit in the porcelain bank. But just as you are about to drop it like it's hot you notice there is an angry Great Dane guarding the toilet and he looks hungry! You quickly shut the door and somehow manage to not lose your shit (literally). Looks like you have to find somewhere else to go if you value your junk...and your life."
             },
             "flags": [
-                "ONBIT",
-                "CONTAINERBIT"
+                "CONTAINERBIT",
+                "ONBIT"
             ],
             "actionMethod": null,
             "timesVisited": 0,
@@ -97,7 +98,7 @@
                     "actionMethod": null
                 }
             },
-            "items": [],
+            "itemKeyValues": [],
             "npcs": []
         },
         {
@@ -112,8 +113,8 @@
                 "HasPooped": "You're in the hallway. The glow of the yellow fluorescent lights are complimented by the well-worn red carpet. The diamond pattern urges you forward."
             },
             "flags": [
-                "ONBIT",
-                "CONTAINERBIT"
+                "CONTAINERBIT",
+                "ONBIT"
             ],
             "actionMethod": null,
             "timesVisited": 0,
@@ -209,7 +210,7 @@
                     "actionMethod": null
                 }
             },
-            "items": [],
+            "itemKeyValues": [],
             "npcs": []
         },
         {
@@ -247,7 +248,7 @@
                     "actionMethod": null
                 }
             },
-            "items": [],
+            "itemKeyValues": [],
             "npcs": []
         },
         {
@@ -358,7 +359,7 @@
                     "actionMethod": null
                 }
             },
-            "items": [],
+            "itemKeyValues": [],
             "npcs": []
         },
         {
@@ -397,7 +398,7 @@
                     "actionMethod": null
                 }
             },
-            "items": [],
+            "itemKeyValues": [],
             "npcs": []
         }
     ]

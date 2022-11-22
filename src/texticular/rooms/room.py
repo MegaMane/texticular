@@ -102,9 +102,8 @@ class Room(GameObject):
         """Append the descriptions of all the takeable items to the room description"""
         response = ''
         for item in self.items:
-            current_item = GameObject.objects_by_key.get(item)
-            if Flags.TAKEBIT in current_item.flags:
-                response += " " + current_item.describe()
+            if Flags.TAKEBIT in item.flags:
+                response += " " + item.describe()
         return response
 
     def get_npcs(self):
@@ -133,7 +132,7 @@ class Room(GameObject):
             "actionMethod": self.action_method_name,
             "timesVisited": self.times_visited,
             "exits": exit_dict,
-            "items": self.items,
+            "itemKeyValues": [item.key_value for item in self.items],
             "npcs": self.npcs
         }
 
