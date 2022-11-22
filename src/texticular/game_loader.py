@@ -1,8 +1,9 @@
 """responsible for loading and saving game objects to and from json"""
 
 import json
+from texticular.game_object import GameObject
 from texticular.game_enums import Flags, Directions
-from texticular.items.story_item import StoryItem, Inventory
+from texticular.items.story_item import StoryItem, Inventory, Container
 from texticular.rooms.room import Room
 from texticular.rooms.exit import  RoomExit
 from texticular.character import Player, NPC
@@ -71,11 +72,34 @@ def decode_story_item_fromjson(dct):
         flags=generate_game_object_flags(dct["flags"])
     )
 
-    constructed_item .current_description = dct["currentDescription"]
-    constructed_item .examine_description = dct["examineDescription"]
-    constructed_item .action_method_name = dct["actionMethod"]
+    constructed_item.current_description = dct["currentDescription"]
+    constructed_item.examine_description = dct["examineDescription"]
+    constructed_item.action_method_name = dct["actionMethod"]
 
     return constructed_item
+
+def decode_container_fromjson(dct):
+    constructed_container = Container(
+        key_value=dct["keyValue"],
+        location_key=dct["locationKey"],
+        name=dct["name"],
+        synonyms=dct["synonyms"],
+        adjectives=dct["adjectives"],
+        descriptions=dct["descriptions"],
+        slots=dct["slots"],
+        key_object=dct["keyObject"],
+        flags=generate_game_object_flags(dct["flags"])
+    )
+
+    constructed_container.current_description = dct["currentDescription"]
+    constructed_container.examine_description = dct["examineDescription"]
+    constructed_container.action_method_name = dct["actionMethod"]
+
+    #Add the items to the container
+    for keyval in dct["itemKeyValues"]:
+        constructed_container.add_item(GameObject.objects_by_key.get(keyval))
+
+    return constructed_container
 
 def encode_rooms_tojson(gamemap, save_file_path):
     rooms = []
@@ -107,10 +131,12 @@ def load_game_map(config_file_path):
         gamemap[decoded_room.key_value] = decoded_room
     return gamemap
 
-def load_game_objects(gamemap, config_file_path):
+
+def load_story_items(gamemap, config_file_path):
     config = load_json(config_file_path)
+    items = [item for item in config["items"] if item["type"] == "StoryItem"]
     storyitems = {}
-    for item in config["items"]:
+    for item in items:
         #print(json.dumps(item, indent=4))
         decoded_item = decode_story_item_fromjson(item)
         add_item_reference_to_room(gamemap, decoded_item)
@@ -123,6 +149,17 @@ def add_item_reference_to_room(gamemap, decoded_item):
         item_location.items.append(decoded_item.key_value)
         return True
     return False
+
+def load_containers(config_file_path):
+    config = load_json(config_file_path)
+    storage_containers = [item for item in config["items"] if item["type"] == "Container"]
+    containers = {}
+    for container in storage_containers:
+        #print(json.dumps(item, indent=4))
+        decoded_container = decode_container_fromjson(container)
+        #add_item_reference_to_room(gamemap, decoded_item)
+        containers[decoded_container.key_value] = decoded_container
+    return containers
 
 def load_player():
     inventory = Inventory(
@@ -153,7 +190,7 @@ def load_player():
 
 if __name__ ==  "__main__":
     gamemap = load_game_map("./../../data/initialGameMap.json")
-    storyitems = load_game_objects(gamemap,"./../../data/items.json")
+    storyitems = load_story_items(gamemap, "./../../data/items.json")
     #print(json.dumps(config, indent=4))
 
 

@@ -89,6 +89,29 @@ class Container(StoryItem):
 
         return response
 
+    def encode_tojson(self, o):
+        """Serialize Container Item to Json
+
+        """
+
+        return {
+            "type": self.__class__.__name__,
+            "keyValue": self.key_value,
+            "locationKey": self.location_key,
+            "name": self.name,
+            "synonyms": self.synonyms,
+            "adjectives": self.adjectives,
+            "currentDescription": self._current_description,
+            "examineDescription": self._examine_description,
+            "descriptions": self.descriptions,
+            "slots": self.slots,
+            "size": self.size,
+            "keyObject": self.key_object,
+            "itemKeyValues": [item.key_value for item in self.items],
+            "flags": [flag.name for flag in self.flags],
+            "actionMethod": self.action_method_name
+        }
+
 class Inventory(Container):
     def __init__(self, key_value: str, name: str, descriptions: dict, synonyms: list, adjectives: list = None,
                  slots: int = 10, location_key: str = None, flags: list = [Flags.CONTAINERBIT, Flags.OPENBIT]):
@@ -106,15 +129,29 @@ class Inventory(Container):
 
 if __name__ == "__main__":
     import json
-    masterKey = StoryItem(
-        key_value="masterKey",
-        name="Master Key",
-        location_key="nowhereLand",
-        descriptions={"Main": "The key that opens every door"},
-        synonyms=["Bad Mother Fuckin' Key"],
-        flags=[Flags.KLUDGEBIT]
+
+    nightStand = Container(
+        key_value="room201-nightStand",
+        name="Stand",
+        descriptions={"Main": "A beat up night stand with a little drawer built into it and black rotary phone on top"},
+        synonyms=["Table"],
+        adjectives=["Beat Up", "Night"],
+        location_key="room201",
+        flags=[Flags.CONTAINERBIT, Flags.SETPIECEBIT]
+    )
+
+    earplugs = StoryItem(
+        key_value="room201-earPlugs",
+        name="Ear Plugs",
+        location_key="room201-nightStand",
+        descriptions={"Main": "Some well loved yellow ear plugs, they smell kinda funky but they still work."},
+        synonyms=["Plugs"],
+        adjectives=["Crusty", "Yellow"],
+        flags=[Flags.TAKEBIT]
 
     )
 
-    print(json.dumps(masterKey, indent=4, default=masterKey.encode_tojson))
+    nightStand.add_item(earplugs)
+
+    print(json.dumps(nightStand, indent=4, default=nightStand.encode_tojson))
 

@@ -1,12 +1,13 @@
 from game_controller import  Controller
 import textwrap
 #These imports should go away after testing
-from texticular.game_loader import load_game_map, load_game_objects, load_player
+from texticular.game_loader import load_game_map, load_story_items, load_player, load_containers
 from texticular.game_enums import Directions
 from texticular.game_object import GameObject
 
 gamemap = load_game_map("./../../data/initialGameMap.json")
-storyitems = load_game_objects(gamemap, "./../../data/items.json")
+storyitems = load_story_items(gamemap, "./../../data/items.json")
+containers = load_containers("./../../data/items.json")
 player = load_player()
 
 controller = Controller(gamemap, player)

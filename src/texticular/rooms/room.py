@@ -66,7 +66,7 @@ class Room(GameObject):
         main_description = ''
         response = []
         main_description += f"You are in the {self.name}: {super().describe()}"
-        main_description += self.get_item_descriptions()
+        main_description += self.get_takeable_item_descriptions()
         main_description += self.get_exit_descriptions()
         response.append(main_description)
         response.append("\n\n---Exits---\n\n")
@@ -98,10 +98,13 @@ class Room(GameObject):
             response.append(f"To the {exit_direction.name} is the {exit_description}\n")
         return response
 
-    def get_item_descriptions(self):
+    def get_takeable_item_descriptions(self):
+        """Append the descriptions of all the takeable items to the room description"""
         response = ''
         for item in self.items:
-            response += " " + GameObject.objects_by_key.get(item).describe()
+            current_item = GameObject.objects_by_key.get(item)
+            if Flags.TAKEBIT in current_item.flags:
+                response += " " + current_item.describe()
         return response
 
     def get_npcs(self):
