@@ -155,7 +155,8 @@ class GameObject:
 
          """
         self.location_key = None
-
+    def has_flag(self, flag: Flags):
+        return flag in self.Flags
     def add_flag(self, flag: Flags):
         self.flags.add(flag)
 

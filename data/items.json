@@ -65,15 +65,15 @@
             ],
             "actionMethod": null
         },
-        {
-            "type": "Container",
+         {
+            "type": "StoryItem",
             "keyValue": "room201-nightStand",
             "locationKey": "room201",
             "name": "Stand",
             "synonyms": [
                 "Table"
             ],
-            "adjectives": [
+             "adjectives": [
                 "Beat Up",
                 "Night"
             ],
@@ -82,7 +82,31 @@
             "descriptions": {
                 "Main": "A beat up night stand with a little drawer built into it and black rotary phone on top"
             },
-            "slots": 10,
+            "size": 40,
+            "flags": [
+                "SETPIECEBIT"
+            ],
+            "actionMethod": null
+        },
+        {
+            "type": "Container",
+            "keyValue": "room201-nightStand-drawer",
+            "locationKey": "room201",
+            "name": "Drawer",
+            "synonyms": [
+                "Table",
+                "Drawer"
+            ],
+            "adjectives": [
+                "Little",
+                "Wooden"
+            ],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "A little wooden drawer that can hold a few items, nothing special about it."
+            },
+            "slots": 5,
             "size": 99,
             "keyObject": null,
             "itemKeyValues": [

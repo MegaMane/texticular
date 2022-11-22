@@ -52,10 +52,11 @@ class Room(GameObject):
         self.exits[direction] = None
 
 
-    def describe(self) -> str:
-        """Return the desciption of everything relevant in the current room
+    def describe(self) -> list:
+        """Return a list containing the desciption of everything relevant in the current room
 
         This includes the room description itself and all items,exits, and npcs visible to the player.
+        Takeable items will be appended to the end of the rooms fixed description before the exits
 
         Returns
         -------

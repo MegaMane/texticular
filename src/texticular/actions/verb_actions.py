@@ -3,14 +3,17 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from texticular.game_enums import *
-from collections import namedtuple
+
 
 if TYPE_CHECKING:
     from texticular.game_controller import Controller
 
 
 def look(controller: Controller):
-    controller.response.extend(controller.player.location.describe())
+    if controller.tokens.direct_object:
+        controller.response.append(controller.tokens.direct_object.describe())
+    else:
+        controller.response.extend(controller.player.location.describe())
     return True
 
 
@@ -61,6 +64,17 @@ def drop(controller: Controller):
     else:
         controller.response.append(f"You don't have a {item.name} to drop.")
         return False
+
+def open(controller: Controller):
+    #TODO Fix this shit
+    #Open needs to check if the container is locked
+    #if the player has the key
+    #open it or reject the player accordingly
+    #if open look inside
+    target = controller.tokens.direct_object
+    controller.response.extend(target.look_inside())
+
+
 
 
 def inventory(controller: Controller):

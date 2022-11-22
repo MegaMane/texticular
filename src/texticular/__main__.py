@@ -24,6 +24,24 @@ def parse(input_generator):
 
 walk_commands = [
     {
+        "action": "look",
+        "direct_object_key": "room201-nightStand",
+        "direct_object": GameObject.objects_by_key.get("room201-nightStand"),
+        "indirect_object_key": None,
+        "indirect_object": None,
+        "user_input": "User Input: Look Night Stand",
+        "notes": "Look at the Night Stand instead of the whole room"
+    },
+    {
+        "action": "open",
+        "direct_object_key": "room201-nightStand-drawer",
+        "direct_object": GameObject.objects_by_key.get("room201-nightStand-drawer"),
+        "indirect_object_key": None,
+        "indirect_object": None,
+        "user_input": "User Input: Open Little Drawer",
+        "notes": "Open the night stand drawer to see what is inside"
+    },
+    {
         "action": "walk",
         "direct_object_key": Directions.WEST,
         "direct_object": "WEST",
@@ -102,6 +120,7 @@ while controller.gamestate.name != "GAMEOVER":
         controller.tokens.indirect_object_key = tokens["indirect_object_key"]
         controller.update()
         print(tokens["user_input"])
+        print('-' * 150)
         print(controller.render())
         #print(controller.render())
     except StopIteration:

@@ -89,6 +89,10 @@ class Controller:
         print("generic verb handler")
         return self.commands[verb](controller=self)
 
+    def get_game_object(self, key_value: str) -> GameObject:
+        game_object = GameObject.objects_by_key.get(key_value)
+        return game_object
+
     def get_input(self):
         self.response = []
     def parse(self) ->bool:
@@ -127,5 +131,6 @@ class Controller:
         self.commands["get"] = va.take
         self.commands["take"] = va.take
         self.commands["drop"] = va.drop
+        self.commands["open"] = va.open
         self.commands["inventory"] = va.inventory
 

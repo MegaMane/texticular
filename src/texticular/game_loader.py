@@ -188,6 +188,11 @@ def load_game_map(game_manifest):
     gamemap["rooms"] = load_game_rooms(f"{relative_path}{room_config}")
     return gamemap
 
+def wire_custom_action_methods(game_object:GameObject, action_method_name:str):
+    pass
+    #game_object.action = game_object.action(custom_action)
+
+
 
 
 if __name__ ==  "__main__":
@@ -196,6 +201,7 @@ if __name__ ==  "__main__":
     # gamemap = load_game_rooms("./../../data/initialGameMap.json")
     gamemap = load_game_map("./../../data/newGameManifest.json")
     load_player()
+    wire_custom_action_methods()
 
     #print(json.dumps(config, indent=4))
 
