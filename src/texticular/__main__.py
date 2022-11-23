@@ -1,13 +1,14 @@
 from game_controller import Controller
 import textwrap
 #These imports should go away after testing
-from texticular.game_loader import load_player, load_game_map
+from texticular.game_loader import load_player, load_game_map, wire_item_action_funcs
 from texticular.game_enums import Directions
 from texticular.game_object import GameObject
 
 
 gamemap = load_game_map("./../../data/newGameManifest.json")
 player = load_player()
+wire_item_action_funcs()
 
 controller = Controller(gamemap, player)
 
@@ -34,11 +35,11 @@ walk_commands = [
     },
     {
         "action": "open",
-        "direct_object_key": "room201-nightStand-drawer",
-        "direct_object": GameObject.objects_by_key.get("room201-nightStand-drawer"),
+        "direct_object_key": "room201-nightStand",
+        "direct_object": GameObject.objects_by_key.get("room201-nightStand"),
         "indirect_object_key": None,
         "indirect_object": None,
-        "user_input": "User Input: Open Little Drawer",
+        "user_input": "User Input: Open Night Stand",
         "notes": "Open the night stand drawer to see what is inside"
     },
     {

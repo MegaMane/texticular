@@ -73,6 +73,7 @@ def open(controller: Controller):
     #if open look inside
     target = controller.tokens.direct_object
     controller.response.extend(target.look_inside())
+    return True
 
 
 

@@ -45,7 +45,7 @@
         {
             "type": "StoryItem",
             "keyValue": "crustyEarPlugs",
-            "locationKey": "room201-nightStand",
+            "locationKey": "room201-nightStand-drawer",
             "name": "Ear Plugs",
             "synonyms": [
                 "Plugs"
@@ -65,7 +65,7 @@
             ],
             "actionMethod": null
         },
-         {
+        {
             "type": "StoryItem",
             "keyValue": "room201-nightStand",
             "locationKey": "room201",
@@ -73,7 +73,7 @@
             "synonyms": [
                 "Table"
             ],
-             "adjectives": [
+            "adjectives": [
                 "Beat Up",
                 "Night"
             ],
@@ -86,7 +86,7 @@
             "flags": [
                 "SETPIECEBIT"
             ],
-            "actionMethod": null
+            "actionMethod": "action_room201_nightStand"
         },
         {
             "type": "Container",
@@ -113,8 +113,8 @@
                 "crustyEarPlugs"
             ],
             "flags": [
-                "CONTAINERBIT",
-                "SETPIECEBIT"
+                "SETPIECEBIT",
+                "CONTAINERBIT"
             ],
             "actionMethod": null
         }

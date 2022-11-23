@@ -199,7 +199,8 @@ class GameObject:
 
     def action(self, func):
         def wrapper_action(*args, **kwargs):
-            func(*args, **kwargs)
+            results = func(*args, **kwargs)
+            return results
         return wrapper_action
 
     def encode_tojson(self,o):
