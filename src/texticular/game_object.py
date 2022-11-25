@@ -1,5 +1,6 @@
 from itertools import count
 from texticular.game_enums import Flags
+import functools
 import json
 
 
@@ -145,16 +146,18 @@ class GameObject:
             raise ValueError(f"Invalid location Key provided {location_key}")
 
     def remove(self):
-        """Remove the object from the game setting its location to None
+        """Remove the object from the game setting its location to "nowhereLand"
+
+        A special room that contains all consumed or unreachable story objects
 
          Examples
          ----------
          >>> skeleton_key.remove()
          >>> print(skeleton_key.location_key)
-         None
+         nowhereLand
 
          """
-        self.location_key = None
+        self.location_key = "nowhereLand"
     def has_flag(self, flag: Flags):
         return flag in self.Flags
     def add_flag(self, flag: Flags):
@@ -198,6 +201,7 @@ class GameObject:
 
 
     def action(self, func):
+        @functools.wraps(func)
         def wrapper_action(*args, **kwargs):
             results = func(*args, **kwargs)
             return results

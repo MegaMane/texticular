@@ -28,14 +28,11 @@ def take(controller: Controller):
     inventory = controller.player.inventory
 
     if item.is_present(controller.player.location):
-        # TODO
-        # Change item.is_present to check if the item is present in any open containers in the players current location
-
         if Flags.TAKEBIT in item.flags:
 
             item_taken = inventory.add_item(item)
             if item_taken:
-                controller.player.location.items.remove(item)
+                controller.player.location.remove_item(item)
                 item.move(inventory.location_key)
                 item.current_description = "Main"
                 controller.response.append("Taken.")
@@ -66,16 +63,41 @@ def drop(controller: Controller):
         return False
 
 def open(controller: Controller):
-    #TODO Fix this shit
-    #Open needs to check if the container is locked
-    #if the player has the key
-    #open it or reject the player accordingly
-    #if open look inside
     target = controller.tokens.direct_object
-    controller.response.extend(target.look_inside())
+    target_key = controller.get_game_object(target.key_object)
+    player_inventory = controller.player.inventory.items
+
+    if target_key in player_inventory:
+        player_inventory.remove_item(target_key)
+    else:
+        target_key = None
+
+    try:
+        target_opened = target.open(target_key)
+    except AttributeError:
+        controller.response.append(f"You can't open the {target.name} try a different command.")
+        return True
+
+    if target_opened:
+        controller.response.extend(target.look_inside())
+    else:
+        controller.response.append(f"The {target.name} is locked and you don't have the key.")
     return True
 
+def close(controller: Controller):
+    target = controller.tokens.direct_object
+    try:
+        target_closed = target.close()
+    except AttributeError:
+        controller.response.append(f"You can't close the {target.name} try a different command.")
+        return True
+    if target_closed:
+        controller.response.append(f"{target.name} closed.")
+    else:
+        controller.response.append(f"No need. The {target.name} is already closed.")
 
+def put(controller: Controller):
+    pass
 
 
 def inventory(controller: Controller):
@@ -84,4 +106,4 @@ def inventory(controller: Controller):
 
 
 def talk(controller):
-    pass
+    raise NotImplementedError

@@ -24,7 +24,7 @@
             "type": "StoryItem",
             "keyValue": "intro-note",
             "locationKey": "room201",
-            "name": "note",
+            "name": "Note",
             "synonyms": [
                 "letter"
             ],
@@ -113,8 +113,8 @@
                 "crustyEarPlugs"
             ],
             "flags": [
-                "SETPIECEBIT",
-                "CONTAINERBIT"
+                "CONTAINERBIT",
+                "SETPIECEBIT"
             ],
             "actionMethod": null
         }

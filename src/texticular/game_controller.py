@@ -115,7 +115,7 @@ class Controller:
                         break_long_words=False,
                         break_on_hyphens=False
                     )
-                )
+                ) + "\n"
 
         formatted_output += f'\n\n{"-" * 150}'
         return formatted_output
@@ -132,5 +132,8 @@ class Controller:
         self.commands["take"] = va.take
         self.commands["drop"] = va.drop
         self.commands["open"] = va.open
+        self.commands["close"] = va.close
+        self.commands["put"] = va.put
         self.commands["inventory"] = va.inventory
+
 

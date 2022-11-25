@@ -85,7 +85,7 @@ def test_raisesValueError_WhenMovingObjectToInvalidLocation(game_object):
 
 def test_canRemoveGameObjectFromMap(game_object):
     game_object.remove()
-    assert game_object.location_key is None
+    assert game_object.location_key is "nowhereLand"
 
 def test_canAddFlagsToGameObject(game_object):
     game_object.add_flag_by_name("TAKEBIT")

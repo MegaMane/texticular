@@ -34,6 +34,15 @@ walk_commands = [
         "notes": "Look at the Night Stand instead of the whole room"
     },
     {
+        "action": "take",
+        "direct_object_key": "crustyEarPlugs",
+        "direct_object": GameObject.objects_by_key.get("crustyEarPlugs"),
+        "indirect_object_key": None,
+        "indirect_object": None,
+        "user_input": "User Input: Take Ear Plugs",
+        "notes": "Try to take an item from a closed container"
+    },
+    {
         "action": "open",
         "direct_object_key": "room201-nightStand",
         "direct_object": GameObject.objects_by_key.get("room201-nightStand"),
@@ -41,6 +50,24 @@ walk_commands = [
         "indirect_object": None,
         "user_input": "User Input: Open Night Stand",
         "notes": "Open the night stand drawer to see what is inside"
+    },
+    {
+        "action": "take",
+        "direct_object_key": "crustyEarPlugs",
+        "direct_object": GameObject.objects_by_key.get("crustyEarPlugs"),
+        "indirect_object_key": None,
+        "indirect_object": None,
+        "user_input": "User Input: Take Ear Plugs",
+        "notes": "Try to take an item from an open container"
+    },
+    {
+        "action": "open",
+        "direct_object_key": "room201-nightStand-drawer",
+        "direct_object": GameObject.objects_by_key.get("room201-nightStand-drawer"),
+        "indirect_object_key": None,
+        "indirect_object": None,
+        "user_input": "User Input: Look Little Wooden Drawer",
+        "notes": "Open the Drawer and there is nothing inside"
     },
     {
         "action": "walk",

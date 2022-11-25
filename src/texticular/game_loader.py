@@ -232,6 +232,8 @@ if __name__ ==  "__main__":
     load_player()
     wire_item_action_funcs()
 
+    #print(gamemap["containers"])
+
     save_state = True
 
     if save_state:

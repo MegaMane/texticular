@@ -1,3 +1,62 @@
+Players should expect to be able to
+
+x Initialize Serialize/Deserialize from Json
+  xRooms,
+  x Items,
+  Player/Inventory
+  NPC Characters
+  Special Classed (Vending Machine)
+  Telephone
+
+x Look At current location and get a description of all the relevant things in their current environment
+  !missing item descriptsion concats adjectives
+
+X Move Between Rooms with unlocked doors</li>
+
+X Examine Objects
+
+X Take and Drop Items In Room
+
+ Containers player can take and put items from open containers
+
+x View Inventory
+
+ Unlock doors and containers with correct key
+
+ Place and retrieve items locker, chest, container etc
+
+ Perform context sensitive actions on a per object bases (meaning you can eat the cake but not the couch...but feel free to try)
+
+ Implement shop (talking vending machine)
+    use special context sensitive items * use phone/keypad/vending machine/magic medicine etc</li>
+
+ Implement Dialogue With NPCs
+   Dialogue with npc can yield items
+   or trigger other events depending on player choice
+
+ Purchase Items from "shops" or vendors which also puts the game into a different menu based interface similar to a dialogue
+
+ Trigger game events/interrupts or "cut scenes" and update game state as needed</li>
+
+ Implement Win and Game Over Conditions and allow player to restart
+
+ Implement Scoring System
+
+ Implement Hint System
+
+ Implement View a log of previous commands
+
+ add ability to save game
+
+ Implement Command Parser
+
+ Bonus:
+ implement magic eight ball (somewhat sentient object)
+ add a splash screen
+ add select sound bytes
+
+
+
 Feature 1 Player can move freely from room to room and get descriptions of all relevant things in current environment
 Todo
     x Finish initialGameMap.json (port over rooms.json)
@@ -8,42 +67,43 @@ Todo
 
 
 Feature 2 Player can pick up items store them in inventory and drop items
-player
-item
-room
-take()
-drop()
+
 
 Containers player can take and put items from open containers
 TODO
-    Left off working on container
-    encode/decode (player w inventory) container from json
-    modify take and look verb actions to deal with checking for open containers
+    put item in container
+    item descriptsion concats adjectives
+    encode/decode (player w inventory)
+    Add all the items in 201 minus tv/phone to json
+
 
 Feature 2.5 Room Descriptions now only include items/game objects that are visible to the player
 
-Feature 3 Player can unlock doors and containers with the correct key
+XFeature 3 Player can unlock doors and containers with the correct key
 
-Feature 4 Player can place and retrieve items locker, chest and other special surfaces/containers
+Feature 4 Player can place and retrieve items from surfaces
 
-Feature 5 Implement Parser and Main Game Loop
-
-Feature 6 Player can use items and interact with objects in context-sensitive ways (Actions)
+Feature 5 Player can use items and interact with objects in context-sensitive ways (Actions)
 (meaning you can eat the cake but not the couch...but feel free to try)
    Test Wiring up Action function so that description can change based on player action room enter exit func
 
-Feature 7 Player can interact with special items that change the game state (normal input)
+Feature 6 Player can interact with special items that change the game state (normal input)
 phone keypad vending machine TV etc
 
-Feature 8 Player can Have conversations with other characters which puts the game into a different dialogue state with
+Feature 7 Player can Have conversations with other characters which puts the game into a different dialogue state with
 options to pick from instead of free form typing
 Purchase Items from "shops" or vendors which also puts the game into a different menu based interface similar to a dialogue
 
-Feature 9 Save a game in progress, Load and Resume a Game
+Feature 8 Implement Parser and Main Game Loop
+
+Feature 9 Implement Scoring System
+
+Feature 10 Implement Save/Load System
+    Save a game in progress, Load and Resume a Game
     Test saving and loading the game with the player in different rooms and descriptions changed
 
-Feature 10 View a log of previous commands
-Feature 11 Get Hints if they are stuck
+Feature 11 View a log of previous commands
+Feature 12 Implement Hint System
 Feature 12 Implement Flask/Web UI
 Feature 13 Add Sound Effects and Splash Screens/visuals
 

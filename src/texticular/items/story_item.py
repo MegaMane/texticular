@@ -41,7 +41,17 @@ class StoryItem(GameObject):
         room: Room
             The room to search for the item
         """
-        return (self.location_key == room.key_value and Flags.INVISIBLE not in self.flags )
+        open_containers = [container for container in room.items if
+                           Flags.CONTAINERBIT in container.flags and Flags.OPENBIT in container.flags]
+
+        item_in_open_container = False
+        for container in open_containers:
+            if self in container.items:
+                item_in_open_container = True
+                break
+
+        return (self.location_key == room.key_value and Flags.INVISIBLE not in self.flags or
+                item_in_open_container )
 
 class Container(StoryItem):
     def __init__(self, key_value: str, name: str, descriptions: dict, synonyms: list, adjectives: list = None,
@@ -70,22 +80,32 @@ class Container(StoryItem):
         return False
 
     def open(self, key_object=None):
-        if Flags.LOCKEDBIT in self.flags and key_object.key_value != self.key_object:
-            return False
-        else:
-            self.add_flag(Flags.OPENBIT)
-            return  True
+        if Flags.LOCKEDBIT in self.flags:
+            if key_object is None:
+                return False
+            if key_object.key_value != self.key_object:
+                return False
+            else:
+                key_object.location_key = self.key_value
+        self.add_flag(Flags.OPENBIT)
+        return True
 
     def close(self):
+        if Flags.OPENBIT not in self.flags:
+            return False
         self.remove_flag(Flags.OPENBIT)
         return True
 
     def look_inside(self) -> str:
         response = []
-        response.append(f"You look inside the {self.name} and see...")
-        response.append("\n" + ("-" * len(response[0])) + "\n\n")
-        for item in self.items:
-            response.append(f"{item.name}: {item.describe()}")
+        response.append(f"You look inside the {self.name} and see...\n")
+        response.append(("-" * len(response[0])) + "\n\n")
+
+        if self.items:
+            for item in self.items:
+                response.append(f"{item.name}: {item.describe()}")
+        else:
+            response.append(f"Nothing. It's empty.")
 
         return response
 
@@ -120,10 +140,13 @@ class Inventory(Container):
 
     def look_inside(self) -> str:
         response = []
-        response.append(f"{self.name}: {super().describe()}")
-        response.append("\n" + ("-" * (len(self.name) + len(super().describe()) + 2)) + "\n\n")
-        for item in self.items:
-            response.append(f"{item.name}: {item.describe()}")
+        response.append(f"{self.name}: {super().describe()}\n")
+        response.append(("-" * (len(self.name) + len(super().describe()) + 2)) + "\n\n")
+        if self.items:
+            for item in self.items:
+                response.append(f"{item.name}: {item.describe()}")
+        else:
+            response.append(f"Nothing. It's empty.")
 
         return response
 
