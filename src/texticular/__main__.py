@@ -70,6 +70,15 @@ walk_commands = [
         "notes": "Open the Drawer and there is nothing inside"
     },
     {
+        "action": "put",
+        "direct_object_key": "crustyEarPlugs",
+        "direct_object": GameObject.objects_by_key.get("crustyEarPlugs"),
+        "indirect_object_key": "room201-nightStand-drawer",
+        "indirect_object": GameObject.objects_by_key.get("room201-nightStand-drawer"),
+        "user_input": "User Input: put the earplugs in the Little Wooden Drawer",
+        "notes": "Test putting the ear plugs back in a container"
+    },
+    {
         "action": "walk",
         "direct_object_key": Directions.WEST,
         "direct_object": "WEST",

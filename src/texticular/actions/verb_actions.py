@@ -27,6 +27,9 @@ def take(controller: Controller):
     item = controller.tokens.direct_object
     inventory = controller.player.inventory
 
+    if item in inventory.items:
+        controller.response.append(f"You've already taken the {item.name}! Check your {inventory.name}")
+
     if item.is_present(controller.player.location):
         if Flags.TAKEBIT in item.flags:
 
@@ -97,7 +100,44 @@ def close(controller: Controller):
         controller.response.append(f"No need. The {target.name} is already closed.")
 
 def put(controller: Controller):
-    pass
+    item = controller.tokens.direct_object
+    container = controller.tokens.indirect_object
+    player_inventory = controller.player.inventory
+    player_location = controller.player.location
+    if container == player_inventory:
+        # put {some item} in {inventory} is equivalent to take
+        return take(controller)
+    else:
+        if not container.has_flag(Flags.CONTAINERBIT):
+            controller.response.append(f"You can't. The {container.name} doesn't have anywhere to put it in (it's not a container).")
+            return False
+        if not container.has_flag(Flags.OPENBIT):
+            controller.response.append(f"Why don't you try opening the {container.name} first!")
+            return False
+        if not item.has_flag(Flags.TAKEBIT):
+            controller.response.append(f"You can't take the {item.name} in the first place. So....no.")
+            return False
+        if not (item.is_present(player_location) or item in player_inventory.items):
+            controller.response.append(f"You can't put the {item.name} anywhere because it's not here.")
+            return False
+
+        # The 50 conditions for putting some shit into a container have been met, let's do this
+        if (
+                container.has_flag(Flags.CONTAINERBIT)
+                and container.has_flag(Flags.OPENBIT)
+                and item.has_flag(Flags.TAKEBIT)
+                # the player either has the item or it is reachable in the current room
+                and (item.is_present(player_location) or item in player_inventory.items)
+        ):
+            if container.add_item(item):
+                player_inventory.remove_item(item)
+                player_location.remove_item(item)
+                item.move(container.key_value)
+                controller.response.append(f"You put the {item.name} in the {container.name}.")
+                return True
+            else:
+                controller.response.append(f"The {item.name} won't fit in the {container.name}!")
+                return False
 
 
 def inventory(controller: Controller):

@@ -52,24 +52,18 @@ class Room(GameObject):
         self.exits[direction] = None
 
     def remove_item(self, item:GameObject):
-        """The object has been taken by the player so remove it from the room or any containers
-
-
-        Parameters
-        ----------
-        game_object
-
-        Returns
-        -------
+        """Remove an item from any 'item' collections in the current room or from any containers inside the room
 
         """
 
         containers = [container for container in self.items if Flags.CONTAINERBIT in container.flags]
         for container in containers:
             if item in container.items:
-                container.items.remove(item)
+                container.remove_item(item)
                 return True
-        self.items.remove(item)
+
+        self.items.remove(item)  # pull the item out of the room "items" array
+        item.remove()  # set its location to "nowhereLand"
         return True
 
     def describe(self) -> list:

@@ -10,6 +10,8 @@ class StoryItem(GameObject):
         if adjectives is None:
             self.adjectives = []
 
+        self.descriptive_name = (" ".join(self.adjectives) + " " + name).strip()
+
         super().__init__(key_value, name, descriptions, location_key, flags)
 
     def encode_tojson(self, o):
@@ -67,7 +69,7 @@ class Container(StoryItem):
         if item.size + self.slots_occupied <= self.slots:
             self.slots_occupied += item.size
             self.items.append(item)
-            item.location_key = self.key_value
+            item.move(self.key_value)
             return True
         return False
 
@@ -75,7 +77,7 @@ class Container(StoryItem):
         if item in self.items:
             self.slots_occupied -= item.size
             self.items.remove(item)
-            item.location_key = None
+            item.remove()
             return True
         return False
 
@@ -98,12 +100,12 @@ class Container(StoryItem):
 
     def look_inside(self) -> str:
         response = []
-        response.append(f"You look inside the {self.name} and see...\n")
+        response.append(f"You look inside the {self.descriptive_name} and see...\n")
         response.append(("-" * len(response[0])) + "\n\n")
 
         if self.items:
             for item in self.items:
-                response.append(f"{item.name}: {item.describe()}")
+                response.append(f"{item.descriptive_name}: {item.describe()}")
         else:
             response.append(f"Nothing. It's empty.")
 
@@ -144,7 +146,7 @@ class Inventory(Container):
         response.append(("-" * (len(self.name) + len(super().describe()) + 2)) + "\n\n")
         if self.items:
             for item in self.items:
-                response.append(f"{item.name}: {item.describe()}")
+                response.append(f"{item.descriptive_name}: {item.describe()}")
         else:
             response.append(f"Nothing. It's empty.")
 
