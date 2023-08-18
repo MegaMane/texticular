@@ -6,7 +6,7 @@ from texticular.game_enums import Directions
 from texticular.game_object import GameObject
 
 
-gamemap = load_game_map("./../../data/newGameManifest.json")
+gamemap = load_game_map("./../../data/GameConfigManifest.json")
 player = load_player()
 wire_item_action_funcs()
 

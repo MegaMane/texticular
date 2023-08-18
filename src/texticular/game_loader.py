@@ -180,10 +180,10 @@ def load_game_rooms(config_file_path):
     return rooms
 
 
-def load_game_map(game_manifest):
+def load_game_map(game_manifest, manifest_key="newGame"):
     manifest = load_json(game_manifest)
-    room_config = manifest["roomConfig"]
-    item_config = manifest["itemConfig"]
+    room_config = manifest[manifest_key]["roomConfig"]
+    item_config = manifest[manifest_key]["itemConfig"]
     relative_path = "./../../data/"
     gamemap = {}
     gamemap["items"] = load_story_items(f"{relative_path}{item_config}")
@@ -228,7 +228,7 @@ def wire_item_action_funcs():
 
 
 if __name__ ==  "__main__":
-    gamemap = load_game_map("./../../data/newGameManifest.json")
+    gamemap = load_game_map("./../../data/GameConfigManifest.json")
     load_player()
     wire_item_action_funcs()
 
@@ -237,5 +237,5 @@ if __name__ ==  "__main__":
     save_state = True
 
     if save_state:
-        encode_rooms_tojson(gamemap["rooms"], save_file_path="../../data/initialGameMap.json")
-        encode_story_items_tojson({**gamemap["items"], **gamemap["containers"]}, save_file_path="../../data/items.json")
+        encode_rooms_tojson(gamemap["rooms"], save_file_path="../../data/newGameMap.json")
+        encode_story_items_tojson({**gamemap["items"], **gamemap["containers"]}, save_file_path="../../data/newGameItems.json")
