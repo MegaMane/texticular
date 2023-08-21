@@ -32,28 +32,28 @@ are false:
 >YELL  
 >PANIC  
 >INVENTORY  
-<p>Note that you cannot have an indirect object without also having a direct objecgt. Also note that
+<p>Note that you cannot have an indirect object without also having a direct object. Also note that
 every valid input starts with a verb/action.</p>
 
 
 Theory of Parser Construction
 -----------------------------
 
-     For our purposes, "parsing" is defined as taking some input and
+For our purposes, "parsing" is defined as taking some input and
 converting it into some output.  In Interactive Fiction (IF), the
 input is what the player types onto the command line ("drop the
 lantern"), and the output is some representation that is usable by the
 underlying game system.
 
-     Unfortunately, much of what has been written about parsers is in
+Unfortunately, much of what has been written about parsers is in
 the context of reading computer programs (such as C and Java) and
 translating them into a runnable form (an executable file or Java
 bytecode).  Because these computer languages are more complex than IF
 input, these parser texts tend to be overly complex.
 
-     Traditionally, there are three steps in parsing:
+### Traditionally, there are three steps in parsing:
 
-1. Lexical Analysis.  This involves reading the source and breaking
+1. **Lexical Analysis:**  This involves reading the source and breaking
 them down into "tokens".  Tokens are sequences of characters which
 represent a logical unit with some underlying meaning.  There are
 programs available (LEX and FLEX) which can be used to construct a
@@ -61,10 +61,10 @@ lexical analyzer program.
 
      Here are some examples.  In the Java program line "if (counter ==
 99)", the six tokens would be "if", "(", "counter", "==", "99", and
-")".  For example, in an sentence "drop the lantern" the tokens would
+")".  For example, in the sentence "drop the lantern" the tokens would
 be the three individual words "drop", "the", and "lantern".
 
-2. Syntactical Analysis.  This involves taking the sequence of tokens
+2. **Syntactical Analysis:**.  This involves taking the sequence of tokens
 and seeing whether the sequence matches certain patterns known to be a
 correct sentence in some particular language.  This set of patterns or
 rules of a language is known as a "grammar".  Syntactical analysis
@@ -75,7 +75,7 @@ which can be used to do this.  There are also programs available (YACC
 and Bison) which can be used to construct a syntactical analyzer
 program.
 
-3. Translation.  This involves taking the parse tree and translating
+3. **Translation:**.  This involves taking the parse tree and translating
 its contents into a form usable by the machine or interpreter.  In
 terms of IF, the translator might be used convert the parse tree into
 a canonical command.  For example, the commands "hang the cloak",
