@@ -58,6 +58,69 @@ class Parser:
                 offset = index + 1
         return offset
 
+    def expand_adjectives(self, adjective_list):
+        """
+        Generate all possible combinations of adjectives given a list of adjectives containig 0-3 elements.
+
+        Args:
+            adjective_list (list): A list of adjectives to be combined max len = 3.
+
+        Returns:
+            list: A list containing individual adjectives and all possible combinations
+                  of adjectives from the input list.
+
+        Example:
+            >>> input_array = ["Tiny", "Sour", "Yellow"]
+            >>> result = expand_adjectives(input_array)
+            >>> print(result)
+            ['Sour', 'Sour Tiny', 'Sour Tiny Yellow', 'Sour Yellow', 'Sour Yellow Tiny', 'Tiny', 'Tiny Sour',
+            'Tiny Sour Yellow', 'Tiny Yellow', 'Tiny Yellow Sour', 'Yellow', 'Yellow Sour',
+            'Yellow Sour Tiny', 'Yellow Tiny', 'Yellow Tiny Sour']
+        """
+        combinations = []
+
+        for i in range(len(adjective_list)):
+            # Add individual adjective
+            combinations.append(adjective_list[i])
+
+            for j in range(i + 1, len(adjective_list)):
+                # Combine with the next adjective
+                combinations.append(f"{adjective_list[i]} {adjective_list[j]}")
+                combinations.append(f"{adjective_list[j]} {adjective_list[i]}")
+
+                for k in range(j + 1, len(adjective_list)):
+                    # Combine with the next adjective again
+                    combinations.append(f"{adjective_list[i]} {adjective_list[j]} {adjective_list[k]}")
+                    combinations.append(f"{adjective_list[i]} {adjective_list[k]} {adjective_list[j]}")
+                    combinations.append(f"{adjective_list[j]} {adjective_list[i]} {adjective_list[k]}")
+                    combinations.append(f"{adjective_list[j]} {adjective_list[k]} {adjective_list[i]}")
+                    combinations.append(f"{adjective_list[k]} {adjective_list[i]} {adjective_list[j]}")
+                    combinations.append(f"{adjective_list[k]} {adjective_list[j]} {adjective_list[i]}")
+
+        return sorted(combinations)
+
+    def get_possible_matches(self, synonyms, adjectives):
+        """
+        Generate all possible combinations of synonyms and adjectives.
+
+        Args:
+            synonyms (list): A list of synonyms.
+            adjectives (list): A list of adjectives.
+
+        Returns:
+            list: A list containing all possible combinations of adjectives and synonyms.
+
+        Example:s
+            >>> synonyms = ["Ear Plugs"]
+            >>> adjectives = ["Crusty", "Yellow"]
+            >>> matches = self.get_possible_matches(synonyms, adjectives)
+            >>> print(matches)
+            ['Crusty Ear Plugs', 'Crusty Yellow Ear Plugs', 'Yellow Ear Plugs', 'Yellow Crusty Ear Plugs']
+        """
+        expanded_adjectives = self.expand_adjectives(adjectives)
+        matches = [f'{adj} {syn}' for adj in expanded_adjectives for syn in synonyms]
+        return matches
+
 
     def parse_input(self, user_input):
         parse_tree = self.tokenize(user_input)
