@@ -310,20 +310,27 @@ class ParseTree:
 
 if __name__ == "__main__":
     gamemap = load_game_map("./../../data/GameConfigManifest.json")
+    known_verbs = ["look", "walk", "go", "move", "get", "take", "drop", "open", "close", "put", "inventory"]
+    parser = Parser(known_verbs, game_objects=GameObject.objects_by_key)
 
-    parser = Parser(["walk", "look", "turn off", "pick up", "drop", "take"], game_objects=GameObject.objects_by_key)
-
-
-    # print(parser.game_objects)
 
     parser_test_sentences = [
-        "Look Night Stand",
-        "turn on the light in the kitchen!",
+        "Look at the Night Stand",
+        "Take the Ear Plugs",
+        "Open Night Stand",
+        "Look at the Little Wooden Drawer",
         "drink the chicken soup on the table.",
-        "talk to the hotel clerk",
+        "put the ear plugs in the Little Wooden Drawer",
         "Take The sour yellow Lemon",
         "Hey, Drop that candlestick!",
-        "Walk East"
+        "Go West",
+        "Walk East",
+        "Take note",
+        "Inventory",
+        "Open Inventory",
+        "Open Backpack",
+        "Drop Note",
+        "look"
     ]
 
     for s in parser_test_sentences:

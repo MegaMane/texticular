@@ -94,6 +94,27 @@ class Player(Character):
         else:
             return [f"You can't do that from the {obj.name}!"]
 
+    def encode_tojson(self, o):
+        """Serialize Player to Json
+
+        """
+
+        return {
+            "type": self.__class__.__name__,
+            "keyValue": self.key_value,
+            "name": self.name,
+            "sex": self.sex,
+            "hp": self.hp,
+            "hpoo": self.hpoo,
+            "locationKey": self.location_key,
+            "currentDescription": self._current_description,
+            "examineDescription": self._examine_description,
+            "descriptions": self.descriptions,
+            "flags": [flag.name for flag in self.flags],
+            "actionMethod": self.action_method_name,
+            "inventory": self.inventory.encode_tojson(self.inventory)
+        }
+
 
 
 

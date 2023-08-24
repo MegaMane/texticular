@@ -11,23 +11,31 @@ from texticular.character import Player, NPC
 import inspect
 
 
-def encode_rooms_tojson(gamemap, save_file_path):
-    rooms = []
-    root_element = {}
-    for gameroom in gamemap.keys():
-        rooms.append(gamemap[gameroom].encode_tojson(gamemap[gameroom]))
-    root_element["rooms"] = rooms
-    with open(save_file_path, "w") as jsonfile:
-        json.dump(root_element, jsonfile, indent=4)
+def encode_to_json(game_objects: dict, save_file_name: str, root_element_name: str):
+    """
+    Serialize a dictionary of game objects to a Json File. Used for saving game state.
 
-def encode_story_items_tojson(storyitems, save_file_path):
-    items = []
-    root_element = {}
-    for item in storyitems.keys():
-        items.append(storyitems[item].encode_tojson(storyitems[item]))
-        root_element["items"] = items
-    with open(save_file_path, "w") as jsonfile:
-        json.dump(root_element, jsonfile, indent=4)
+    Parameters
+    ----------
+    game_objects: dict
+        A dictionary of game objects where keys are identifiers and values are GameObject instances.
+    save_file_name: str
+        The file name where the JSON data will be saved. Files will be saved in the data directory
+        relative path = ./../../data/
+    root_element_name: str
+        The name of the root element in the JSON structure.
+
+    Returns
+    -------
+    None
+    """
+    json_objects = []
+    json_document = {}
+    for obj in game_objects.keys():
+        json_objects.append(game_objects[obj].encode_tojson(game_objects[obj]))
+        json_document [root_element_name] = json_objects
+    with open(f"./../../data/{save_file_name}", "w") as jsonfile:
+        json.dump(json_document, jsonfile, indent=4)
 
 
 def load_json(json_file_path):
@@ -42,17 +50,31 @@ def generate_game_object_flags(flag_list=None):
         return [Flags[flag] for flag in flag_list]
 
 def decode_container_fromjson(dct):
-    constructed_container = Container(
-        key_value=dct["keyValue"],
-        location_key=dct["locationKey"],
-        name=dct["name"],
-        synonyms=dct["synonyms"],
-        adjectives=dct["adjectives"],
-        descriptions=dct["descriptions"],
-        slots=dct["slots"],
-        key_object=dct["keyObject"],
-        flags=generate_game_object_flags(dct["flags"])
-    )
+    if dct["keyValue"] == "player-inventory":
+        print("player inventory!!!!")
+        constructed_container = Inventory(
+            key_value=dct["keyValue"],
+            location_key=dct["locationKey"],
+            name=dct["name"],
+            synonyms=dct["synonyms"],
+            adjectives=dct["adjectives"],
+            descriptions=dct["descriptions"],
+            slots=dct["slots"],
+            flags=generate_game_object_flags(dct["flags"])
+        )
+    else:
+        constructed_container = Container(
+            key_value=dct["keyValue"],
+            location_key=dct["locationKey"],
+            name=dct["name"],
+            synonyms=dct["synonyms"],
+            adjectives=dct["adjectives"],
+            descriptions=dct["descriptions"],
+            slots=dct["slots"],
+            key_object=dct["keyObject"],
+            flags=generate_game_object_flags(dct["flags"])
+        )
+
 
     constructed_container.current_description = dct["currentDescription"]
     constructed_container.examine_description = dct["examineDescription"]
@@ -127,6 +149,25 @@ def decode_room_exits_fromjson(dct):
 
     return exits
 
+def decode_character_from_json(dct):
+    if dct["type"] == "Player":
+        player_inventory = decode_container_fromjson(dct["inventory"])
+
+        constructed_player = Player(
+            key_value=dct["keyValue"],
+            name=dct["name"],
+            descriptions=dct["descriptions"],
+            sex = dct["sex"],
+            location_key=dct["locationKey"],
+            flags=generate_game_object_flags(dct["flags"]),
+            inventory=player_inventory
+        )
+
+        return constructed_player
+    else:
+        raise NotImplementedError
+
+
 
 def load_story_items(config_file_path):
     config = load_json(config_file_path)
@@ -149,26 +190,35 @@ def load_containers(config_file_path):
         containers[decoded_container.key_value] = decoded_container
     return containers
 
-def load_player():
-    inventory = Inventory(
-        key_value="player-inventory",
-        name="Backpack",
-        descriptions={"Main": "Your trusty black backpack."},
-        location_key="player",
-        synonyms=["Bag", "Inventory"]
-
-    )
-    player = Player(
-        key_value="player",
-        name="Jon",
-        descriptions= {"Main": "An Angry nerd with delusions of grandeur."},
-        sex = "Male",
-        location_key=("room201"),
-        flags=[Flags.PLAYERBIT],
-        inventory=inventory
-    )
-
+def load_player(config_file_path):
+    config = load_json(config_file_path)
+    players = [char for char in config["characters"] if char["type"] == "Player"]
+    player = decode_character_from_json(players[0])
     return player
+
+
+
+
+
+    # inventory = Inventory(
+    #     key_value="player-inventory",
+    #     name="Backpack",
+    #     descriptions={"Main": "Your trusty black backpack."},
+    #     location_key="player",
+    #     synonyms=["Bag", "Inventory"]
+    #
+    # )
+    # player = Player(
+    #     key_value="player",
+    #     name="Jon",
+    #     descriptions= {"Main": "An Angry nerd with delusions of grandeur."},
+    #     sex = "Male",
+    #     location_key=("room201"),
+    #     flags=[Flags.PLAYERBIT],
+    #     inventory=inventory
+    # )
+
+    # return player
 
 
 def load_game_rooms(config_file_path):
@@ -229,7 +279,14 @@ def wire_item_action_funcs():
 
 if __name__ ==  "__main__":
     gamemap = load_game_map("./../../data/GameConfigManifest.json")
-    load_player()
+
+    manifest = load_json("./../../data/GameConfigManifest.json")
+    character_config = manifest["newGame"]["characterConfig"]
+    relative_path = "./../../data/"
+    player = load_player(f"{relative_path}{character_config}")
+
+    print(player)
+
     wire_item_action_funcs()
 
     #print(gamemap["containers"])
@@ -237,5 +294,8 @@ if __name__ ==  "__main__":
     save_state = True
 
     if save_state:
-        encode_rooms_tojson(gamemap["rooms"], save_file_path="../../data/newGameMap.json")
-        encode_story_items_tojson({**gamemap["items"], **gamemap["containers"]}, save_file_path="../../data/newGameItems.json")
+        characters = {}
+        characters["player"] = GameObject.objects_by_key.get("player")
+        encode_to_json(characters, "newGameCharacters.json", "characters")
+        encode_to_json(game_objects=gamemap["rooms"], save_file_name="newGameMap.json", root_element_name="rooms")
+        encode_to_json(game_objects={**gamemap["items"], **gamemap["containers"]}, save_file_name="testnewGameItems.json", root_element_name="items")
