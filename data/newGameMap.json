@@ -133,8 +133,8 @@
                         "Main": "is the DOOR to room 203. From the sounds of it someone's parents were really overdue for some alone time. The headboard is rattling against the wall and shit sounds like it's breaking. All seems consensual though...if a little embarassing."
                     },
                     "flags": [
-                        "DOORBIT",
-                        "LOCKEDBIT"
+                        "LOCKEDBIT",
+                        "DOORBIT"
                     ],
                     "actionMethod": null
                 },
@@ -205,8 +205,8 @@
                         "Main": "the DOOR to room 202. All is quiet, except of course for the incessant grunting and pounding going on next door in room 203. God I hope nobody is trying to sleep in there..."
                     },
                     "flags": [
-                        "DOORBIT",
-                        "LOCKEDBIT"
+                        "LOCKEDBIT",
+                        "DOORBIT"
                     ],
                     "actionMethod": null
                 }
@@ -282,8 +282,8 @@
                         "Main": "the DOOR to Room 204. What lies beyond is a mystery (and probaly none of your business). But hey, nobody is stopping you from knocking. Except for maybe that growler a brewin', with that one way ticket to your pantaloons if you don't hurry the fuck up!"
                     },
                     "flags": [
-                        "DOORBIT",
-                        "LOCKEDBIT"
+                        "LOCKEDBIT",
+                        "DOORBIT"
                     ],
                     "actionMethod": null
                 },
@@ -318,8 +318,8 @@
                         "Main": "there is a DOOR marked \"Supply Closet\"."
                     },
                     "flags": [
-                        "DOORBIT",
-                        "LOCKEDBIT"
+                        "LOCKEDBIT",
+                        "DOORBIT"
                     ],
                     "actionMethod": null
                 },

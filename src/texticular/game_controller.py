@@ -1,3 +1,5 @@
+import logging
+import textwrap
 import texticular.actions.verb_actions as va
 from texticular.game_object import GameObject
 from texticular.rooms.room import Room
@@ -5,30 +7,29 @@ from texticular.game_enums import Directions
 from texticular.character import Player,NPC
 from dataclasses import dataclass
 from texticular.game_enums import GameStates
-import textwrap
+from texticular.command_parser import Parser, ParseTree
+from texticular.globals import *
+
+# logging.basicConfig(filename = "./../../data/texticular.log", level=logging.DEBUG, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(levelname)s - %(message)s')
 
 class Controller:
     # def __new__(cls, gamemap: dict, player: Player):
     #     if not hasattr(cls, 'instance'):
     #         cls.instance = super(Controller, cls).__new__(cls, gamemap, player)
     #     return cls.instance
-    @dataclass
-    class Tokens:
-        action: str
-        direct_object_key: str
-        direct_object: GameObject
-        indirect_object_key: str
-        indirect_object: GameObject
 
     def __init__(self, gamemap: dict[str, Room], player: Player):
         self.gamemap = gamemap
         self.commands = {}
+        self.player_input_history = []
         self.globals = {}
         self.response = []
         self.set_commands()
-        self.tokens = self.Tokens("", "", None, "", None)
         self.gamestate = GameStates.EXPLORATION
         self.player = player
+        self.parser = Parser(game_objects=GameObject.objects_by_key)
+        self.tokens = ParseTree()
 
 
     def go(self):
@@ -72,7 +73,7 @@ class Controller:
             target_object = self.tokens.indirect_object
             custom_action_method_exists = target_object.action_method_name
             if custom_action_method_exists:
-                print("indirect object handler")
+                logging.debug("indirect object handler")
                 if target_object.action(controller=self, target=target_object):
                     return True
 
@@ -81,12 +82,12 @@ class Controller:
             target_object = self.tokens.direct_object
             custom_action_method_exists = target_object.action_method_name
             if custom_action_method_exists:
-                print("direct object handler")
+                logging.debug("direct object handler")
                 if target_object.action(controller=self, target=target_object):
                     return True
 
         # fall through to the most generic verb response
-        print("generic verb handler")
+        logging.debug("generic verb handler")
         return self.commands[verb](controller=self)
 
     def get_game_object(self, key_value: str) -> GameObject:
@@ -94,13 +95,27 @@ class Controller:
         return game_object
 
     def get_input(self):
+        self.user_input = input(">>")
+        self.player_input_history.append(self.user_input)
+        self.user_input = self.user_input.strip()
         self.response = []
+
     def parse(self) ->bool:
-        return True
+        self.tokens = self.parser.parse_input(self.user_input)
+        return self.tokens.input_parsed
+
     def update(self):
         if self.parse():
+            logging.debug(self.tokens)
+            self.tokens.direct_object = self.get_game_object(self.tokens.direct_object_key)
+            self.tokens.indirect_object = self.get_game_object(self.tokens.indirect_object_key)
             self.handle_input()
             self.clocker()
+        else:
+            self.response = [self.tokens.response]
+            logging.debug(self.tokens)
+
+
     def render(self):
         formatted_output = ''
         for line in self.response:
@@ -128,6 +143,7 @@ class Controller:
     def set_commands(self):
         self.commands["look"] = va.look
         self.commands["walk"] = va.walk
+        self.commands["go"] = va.walk
         self.commands["get"] = va.take
         self.commands["take"] = va.take
         self.commands["drop"] = va.drop

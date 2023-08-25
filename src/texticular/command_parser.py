@@ -1,10 +1,11 @@
 import re
-from texticular.game_loader import load_player, load_game_map, wire_item_action_funcs
+from texticular.game_loader import load_game_map
 from texticular.game_enums import Directions
 from texticular.game_object import GameObject
 from texticular.items.story_item import  StoryItem
+from texticular.globals import *
 
-SINGLE_VERB_COMMANDS = ["get up", "help", "inventory", "look", "quit", "save"]
+
 
 class Parser:
     """A class responsible for attempting to parse player input into a known verb and optionally direct object & indirect object
@@ -39,7 +40,7 @@ class Parser:
     parse_input(user_input): Parse the player input and create a ParseTree object with relevant information.
     """
 
-    def __init__(self, known_verbs: list, game_objects: dict):
+    def __init__(self, game_objects: dict, known_verbs: list = KNOWN_VERBS):
         self.actions = known_verbs
         self.prepositions = ["in", "on", "at", "from"]
         # through, inside, up, under, over, beside, below, down ...{the apple}
@@ -290,7 +291,9 @@ class ParseTree:
         self.tokens = []
         self.action = None
         self.direct_object_key = None
+        self.direct_object = None
         self.indirect_object_key = None
+        self.indirect_object = None
         self.input_parsed = False
         self.response = None
 
@@ -310,8 +313,7 @@ class ParseTree:
 
 if __name__ == "__main__":
     gamemap = load_game_map("./../../data/GameConfigManifest.json")
-    known_verbs = ["look", "walk", "go", "move", "get", "take", "drop", "open", "close", "put", "inventory"]
-    parser = Parser(known_verbs, game_objects=GameObject.objects_by_key)
+    parser = Parser(game_objects=GameObject.objects_by_key)
 
 
     parser_test_sentences = [

@@ -51,7 +51,6 @@ def generate_game_object_flags(flag_list=None):
 
 def decode_container_fromjson(dct):
     if dct["keyValue"] == "player-inventory":
-        print("player inventory!!!!")
         constructed_container = Inventory(
             key_value=dct["keyValue"],
             location_key=dct["locationKey"],
@@ -190,35 +189,14 @@ def load_containers(config_file_path):
         containers[decoded_container.key_value] = decoded_container
     return containers
 
-def load_player(config_file_path):
+def load_characters(config_file_path):
     config = load_json(config_file_path)
-    players = [char for char in config["characters"] if char["type"] == "Player"]
-    player = decode_character_from_json(players[0])
-    return player
-
-
-
-
-
-    # inventory = Inventory(
-    #     key_value="player-inventory",
-    #     name="Backpack",
-    #     descriptions={"Main": "Your trusty black backpack."},
-    #     location_key="player",
-    #     synonyms=["Bag", "Inventory"]
-    #
-    # )
-    # player = Player(
-    #     key_value="player",
-    #     name="Jon",
-    #     descriptions= {"Main": "An Angry nerd with delusions of grandeur."},
-    #     sex = "Male",
-    #     location_key=("room201"),
-    #     flags=[Flags.PLAYERBIT],
-    #     inventory=inventory
-    # )
-
-    # return player
+    game_characters = config["characters"]
+    characters = {}
+    for character in game_characters:
+        decoded_character  = decode_character_from_json(character)
+        characters[decoded_character.key_value] = decoded_character
+    return characters
 
 
 def load_game_rooms(config_file_path):
@@ -234,11 +212,17 @@ def load_game_map(game_manifest, manifest_key="newGame"):
     manifest = load_json(game_manifest)
     room_config = manifest[manifest_key]["roomConfig"]
     item_config = manifest[manifest_key]["itemConfig"]
+    character_config = manifest["newGame"]["characterConfig"]
+
     relative_path = "./../../data/"
     gamemap = {}
+
     gamemap["items"] = load_story_items(f"{relative_path}{item_config}")
     gamemap["containers"] = load_containers(f"{relative_path}{item_config}")
     gamemap["rooms"] = load_game_rooms(f"{relative_path}{room_config}")
+    gamemap["characters"] = load_characters(f"{relative_path}{character_config}")
+
+    wire_item_action_funcs()
     return gamemap
 
 def wire_item_action_funcs():
@@ -279,15 +263,11 @@ def wire_item_action_funcs():
 
 if __name__ ==  "__main__":
     gamemap = load_game_map("./../../data/GameConfigManifest.json")
+    player = gamemap["characters"]["player"]
+    #player.inventory.add_item(gamemap["items"]["room201-nightStand-lemon"])
+    #print(json.dumps(player, indent=4, default=player.encode_tojson))
 
-    manifest = load_json("./../../data/GameConfigManifest.json")
-    character_config = manifest["newGame"]["characterConfig"]
-    relative_path = "./../../data/"
-    player = load_player(f"{relative_path}{character_config}")
 
-    print(player)
-
-    wire_item_action_funcs()
 
     #print(gamemap["containers"])
 
