@@ -65,13 +65,15 @@ class Container(StoryItem):
         self.key_object = key_object
         self.items = []
 
+    def check_item_fits_inside(self, item: StoryItem):
+        return item.size + self.slots_occupied <= self.slots
+
     def add_item(self, item: StoryItem) -> bool:
-        if item.size + self.slots_occupied <= self.slots:
-            self.slots_occupied += item.size
-            self.items.append(item)
-            item.move(self.key_value)
-            return True
-        return False
+        self.slots_occupied += item.size
+        self.items.append(item)
+        item.move(self.key_value)
+        return True
+
 
     def remove_item(self, item: StoryItem) -> bool:
         if item in self.items:

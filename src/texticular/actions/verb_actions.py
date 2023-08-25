@@ -129,10 +129,10 @@ def put(controller: Controller):
                 # the player either has the item or it is reachable in the current room
                 and (item.is_present(player_location) or item in player_inventory.items)
         ):
-            if container.add_item(item):
+            if container.check_item_fits_inside(item):
                 player_inventory.remove_item(item)
                 player_location.remove_item(item)
-                item.move(container.key_value)
+                container.add_item(item)
                 controller.response.append(f"You put the {item.name} in the {container.name}.")
                 return True
             else:

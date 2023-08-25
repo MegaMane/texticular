@@ -20,3 +20,13 @@ SINGLE_VERB_COMMANDS = [
     "quit",
     "save"
 ]
+
+
+PREPOSITIONS = [
+    "in",
+    "on",
+    "at",
+    "from"
+    # "inside"
+    # through, up, under, over, beside, below, down ...{the apple}
+]

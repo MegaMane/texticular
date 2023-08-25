@@ -10,6 +10,8 @@ from texticular.game_enums import GameStates
 from texticular.command_parser import Parser, ParseTree
 from texticular.globals import *
 
+
+
 # logging.basicConfig(filename = "./../../data/texticular.log", level=logging.DEBUG, filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 logging.basicConfig(level=logging.DEBUG, format='%(name)s - %(levelname)s - %(message)s')
 
@@ -30,6 +32,7 @@ class Controller:
         self.player = player
         self.parser = Parser(game_objects=GameObject.objects_by_key)
         self.tokens = ParseTree()
+
 
 
     def go(self):

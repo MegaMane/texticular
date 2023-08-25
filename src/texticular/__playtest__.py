@@ -22,6 +22,12 @@ def parse(input_generator):
     """Generate perfectly parsed input for testing"""
     return next(input_generator)
 
+def update():
+    controller.tokens.direct_object = controller.get_game_object(controller.tokens.direct_object_key)
+    controller.tokens.indirect_object = controller.get_game_object(controller.tokens.indirect_object_key)
+    controller.response = []
+    controller.handle_input()
+
 
 walk_commands = [
     {
@@ -77,6 +83,15 @@ walk_commands = [
         "indirect_object": GameObject.objects_by_key.get("room201-nightStand-drawer"),
         "user_input": "User Input: put the earplugs in the Little Wooden Drawer",
         "notes": "Test putting the ear plugs back in a container"
+    },
+    {
+        "action": "open",
+        "direct_object_key": "room201-nightStand",
+        "direct_object": GameObject.objects_by_key.get("room201-nightStand"),
+        "indirect_object_key": None,
+        "indirect_object": None,
+        "user_input": "User Input: Open the Night Stand",
+        "notes": "Make sure the earplugs are back in there and not in 'nowhereland'"
     },
     {
         "action": "walk",
@@ -147,7 +162,6 @@ test_walk = input_generator(walk_commands)
 
 print(controller.go())
 while controller.gamestate.name != "GAMEOVER":
-    controller.get_input()
     try:
         tokens = parse(test_walk)
         controller.tokens.action = tokens["action"]
@@ -155,8 +169,9 @@ while controller.gamestate.name != "GAMEOVER":
         controller.tokens.direct_object_key = tokens["direct_object_key"]
         controller.tokens.indirect_object = tokens["indirect_object"]
         controller.tokens.indirect_object_key = tokens["indirect_object_key"]
-        controller.update()
+        update()
         print(tokens["user_input"])
+        print(f'Notes: {tokens["notes"]}')
         print('-' * 150)
         print(controller.render())
         #print(controller.render())

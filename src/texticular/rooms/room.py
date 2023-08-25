@@ -62,8 +62,9 @@ class Room(GameObject):
                 container.remove_item(item)
                 return True
 
-        self.items.remove(item)  # pull the item out of the room "items" array
-        item.remove()  # set its location to "nowhereLand"
+        if item in self.items:
+            self.items.remove(item)  # pull the item out of the room "items" array
+            item.remove()  # set its location to "nowhereLand"
         return True
 
     def describe(self) -> list:

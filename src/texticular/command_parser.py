@@ -42,8 +42,7 @@ class Parser:
 
     def __init__(self, game_objects: dict, known_verbs: list = KNOWN_VERBS):
         self.actions = known_verbs
-        self.prepositions = ["in", "on", "at", "from"]
-        # through, inside, up, under, over, beside, below, down ...{the apple}
+        self.prepositions = PREPOSITIONS
 
         self.game_objects = {}
         for k, v in game_objects.items():
