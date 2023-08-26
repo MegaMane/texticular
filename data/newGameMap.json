@@ -14,7 +14,7 @@
                 "CONTAINERBIT",
                 "ONBIT"
             ],
-            "actionMethod": null,
+            "actionMethod": "action_room201",
             "timesVisited": 0,
             "exits": {
                 "WEST": {
@@ -77,7 +77,7 @@
                 "CONTAINERBIT",
                 "ONBIT"
             ],
-            "actionMethod": null,
+            "actionMethod": "action-bathroom-room201",
             "timesVisited": 0,
             "exits": {
                 "EAST": {

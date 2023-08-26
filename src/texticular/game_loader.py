@@ -1,7 +1,8 @@
 """responsible for loading and saving game objects to and from json"""
 
 import json
-import texticular.actions.item_actions as item_actions
+import texticular.actions.story_item_actions as story_item_actions
+import texticular.actions.room_actions as room_actions
 from texticular.game_object import GameObject
 from texticular.game_enums import Flags, Directions
 from texticular.items.story_item import StoryItem, Inventory, Container
@@ -222,10 +223,11 @@ def load_game_map(game_manifest, manifest_key="newGame"):
     gamemap["rooms"] = load_game_rooms(f"{relative_path}{room_config}")
     gamemap["characters"] = load_characters(f"{relative_path}{character_config}")
 
-    wire_item_action_funcs()
+    wire_story_item_action_funcs()
+    wire_room_action_funcs()
     return gamemap
 
-def wire_item_action_funcs():
+def wire_story_item_action_funcs():
     """Use the inspect module to return all of the functions in the item_actions module
 
     function names are identical to the key value of the object they belong to with two exceptions
@@ -243,7 +245,7 @@ def wire_item_action_funcs():
 
 
     """
-    func_names = [item[0] for item in inspect.getmembers(item_actions,predicate=inspect.isfunction)]
+    func_names = [item[0] for item in inspect.getmembers(story_item_actions,predicate=inspect.isfunction)]
     key_values = [func_name.strip("action_").replace("_","-") for func_name in func_names]
     action_functions = dict(zip(key_values, func_names))
 
@@ -251,9 +253,40 @@ def wire_item_action_funcs():
         item_to_wire = GameObject.objects_by_key.get(item)
         if item_to_wire:
             func_name = action_functions[item]
-            custom_action = eval(f"item_actions.{func_name }")
+            custom_action = eval(f"story_item_actions.{func_name }")
             item_to_wire.action = item_to_wire.action(custom_action)
             item_to_wire.action_method_name = func_name
+
+
+def wire_room_action_funcs():
+    """Use the inspect module to return all of the functions in the item_actions module
+
+    function names are identical to the key value of the object they belong to with two exceptions
+
+    1. an 'action_' prefix is added on to the beginning of the function
+    2. dashes from the key value are replaced with underscores because they are not allowed in function names
+
+    example: The function action_room201_nightStand maps to the item with a key value of room201-nightStand
+
+    Once the key_value: function mapping is built we loop through the dictionary keys and try to get any
+    corresponding game items that match and then use eval to assign that function to the objects action method
+    as well as write a reference to its name that will be saved when the object is serialized
+
+    This seems like it might be some bad hacky shit, but it seems to work and it's pretty cool
+
+
+    """
+    func_names = [room[0] for room in inspect.getmembers(room_actions, predicate=inspect.isfunction)]
+    key_values = [func_name.strip("action_").replace("_","-") for func_name in func_names]
+    action_functions = dict(zip(key_values, func_names))
+
+    for room in action_functions:
+        room_to_wire = GameObject.objects_by_key.get(room)
+        if room_to_wire:
+            func_name = action_functions[room]
+            custom_action = eval(f"room_actions.{func_name }")
+            room_to_wire.action = room_to_wire.action(custom_action)
+            room_to_wire.action_method_name = func_name
 
 
 

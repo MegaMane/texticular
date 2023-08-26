@@ -66,11 +66,11 @@ class Controller:
         direct_object= tokens.direct_object_key
         indirect_object = tokens.indirect_object
 
-        current_room = self.player.location
-        room_action_method_exists = current_room.action_method_name
-        if room_action_method_exists:
-            if current_room.action(controller=self):
-                return True
+        # current_room = self.player.location
+        # room_action_method_exists = current_room.action_method_name
+        # if room_action_method_exists:
+        #     if current_room.action(context="M-ENTER"):
+        #         return True
 
 
         if isinstance(tokens.direct_object_key, Directions):
@@ -121,6 +121,10 @@ class Controller:
             self.tokens.indirect_object = self.get_game_object(self.tokens.indirect_object_key)
             self.handle_input()
             self.clocker()
+            logging.debug(f"""
+            Player Location: {self.player.location.name}
+            Room Action Method: {self.player.location.action_method_name}
+            """)
         else:
             self.response = [self.tokens.response]
             logging.debug(self.tokens)
@@ -161,5 +165,7 @@ class Controller:
         self.commands["close"] = va.close
         self.commands["put"] = va.put
         self.commands["inventory"] = va.inventory
+
+
 
 
