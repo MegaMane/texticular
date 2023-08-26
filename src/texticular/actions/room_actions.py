@@ -8,5 +8,6 @@ if TYPE_CHECKING:
 
 
 def action_room201(controller: Controller, target: GameObject) -> bool:
-    pass
+    controller.response.extend("Room action for Room 201 called!")
+    return False
 

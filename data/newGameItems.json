@@ -148,6 +148,56 @@
                 "SETPIECEBIT"
             ],
             "actionMethod": null
+        },
+        {
+            "type": "Container",
+            "keyValue": "room201-couch",
+            "locationKey": "room201",
+            "name": "Couch",
+            "synonyms": [
+                "couch"
+            ],
+            "adjectives": [
+                "obnoxious",
+                "orange"
+            ],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "There is an obnoxious orange couch in the corner"
+            },
+            "slots": 5,
+            "size": 99,
+            "keyObject": null,
+            "itemKeyValues": [
+                "key-eastHallway2f-supplyCloset"
+            ],
+            "flags": [
+                "CONTAINERBIT",
+                "SETPIECEBIT"
+            ],
+            "actionMethod": "action_room201_couch"
+        },
+        {
+            "type": "StoryItem",
+            "keyValue": "key-eastHallway2f-supplyCloset",
+            "locationKey": "room201-couch",
+            "name": "Supply Closet Key",
+            "synonyms": [
+                "Supply Closet Key",
+                "Key"
+            ],
+            "adjectives": ["little"],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "A little key that has some faded writing on it. You can make out 'S__ply CLst'"
+            },
+            "size": 1,
+            "flags": [
+                "TAKEBIT"
+            ],
+            "actionMethod": null
         }
     ]
 }

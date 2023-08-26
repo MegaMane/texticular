@@ -66,6 +66,13 @@ class Controller:
         direct_object= tokens.direct_object_key
         indirect_object = tokens.indirect_object
 
+        current_room = self.player.location
+        room_action_method_exists = current_room.action_method_name
+        if room_action_method_exists:
+            if current_room.action(controller=self):
+                return True
+
+
         if isinstance(tokens.direct_object_key, Directions):
             # print("is instance of direction")
             return self.commands[verb](controller=self)

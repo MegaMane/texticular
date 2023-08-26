@@ -58,6 +58,7 @@
             "itemKeyValues": [
                 "room201-nightStand",
                 "room201-nightStand-drawer",
+                "room201-nightStand-lemon",
                 "intro-note"
             ],
             "npcs": []
@@ -311,7 +312,7 @@
                     "locationKey": "eastHallway-2f",
                     "name": "Supply Closet",
                     "connection": "eastHallway2f-supplyCloset",
-                    "keyObject": "key-supplyCloset",
+                    "keyObject": "key-eastHallway2f-supplyCloset",
                     "currentDescription": "Main",
                     "examineDescription": "Main",
                     "descriptions": {
@@ -395,6 +396,44 @@
                     "flags": [
                         "OPENBIT",
                         "DOORBIT"
+                    ],
+                    "actionMethod": null
+                }
+            },
+            "itemKeyValues": [],
+            "npcs": []
+        },
+        {
+            "type": "Room",
+            "keyValue": "eastHallway2f-supplyCloset",
+            "locationKey": "Map",
+            "name": "Supply Closet",
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "You have entered the supply closet, a descripition should be coming soon, but this is only a test of the emergency broadcast system."
+            },
+            "flags": [
+                "CONTAINERBIT"
+            ],
+            "actionMethod": null,
+            "timesVisited": 0,
+            "exits": {
+                "WEST": {
+                    "type": "RoomExit",
+                    "keyValue": "exits-supplyCloset-eastHallway",
+                    "locationKey": "eastHallway2f-supplyCloset",
+                    "name": "East Hallway",
+                    "connection": "eastHallway-2f",
+                    "keyObject": "key-eastHallway2f-supplyCloset",
+                    "currentDescription": "Main",
+                    "examineDescription": "Main",
+                    "descriptions": {
+                        "Main": "back from whence you came, lies the EAST HALLWAY."
+                    },
+                    "flags": [
+                        "DOORBIT",
+                        "LOCKEDBIT"
                     ],
                     "actionMethod": null
                 }

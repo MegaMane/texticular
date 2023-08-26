@@ -139,6 +139,8 @@ def put(controller: Controller):
                 controller.response.append(f"The {item.name} won't fit in the {container.name}!")
                 return False
 
+def unlock(controller: Controller):
+    pass
 
 def inventory(controller: Controller):
     controller.response.extend(controller.player.inventory.look_inside())
