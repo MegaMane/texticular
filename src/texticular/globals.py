@@ -31,3 +31,10 @@ PREPOSITIONS = [
     # through, up, under, over, beside, below, down ...{the apple}
 ]
 
+
+
+
+# Player State
+GREAT_DANE_ENCOUNTERED = False
+HAS_POOPED = False
+PLAYERSITTING = False

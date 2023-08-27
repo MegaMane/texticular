@@ -311,4 +311,4 @@ if __name__ ==  "__main__":
         characters["player"] = GameObject.objects_by_key.get("player")
         encode_to_json(characters, "newGameCharacters.json", "characters")
         encode_to_json(game_objects=gamemap["rooms"], save_file_name="newGameMap.json", root_element_name="rooms")
-        encode_to_json(game_objects={**gamemap["items"], **gamemap["containers"]}, save_file_name="testnewGameItems.json", root_element_name="items")
+        encode_to_json(game_objects={**gamemap["items"], **gamemap["containers"]}, save_file_name="newGameItems.json", root_element_name="items")

@@ -110,7 +110,7 @@ class Room(GameObject):
     def list_exits(self) -> str:
         response = []
         for exit_direction in self.exits.keys():
-            exit_description = self.exits[exit_direction].name
+            exit_description = f"{self.exits[exit_direction].name} : {self.exits[exit_direction].describe()}"
             response.append(f"To the {exit_direction.name} is the {exit_description}\n")
         return response
 

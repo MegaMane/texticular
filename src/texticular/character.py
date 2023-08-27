@@ -45,10 +45,10 @@ class Player(Character):
             # call rooms action routine
             # call describers
             self.location_key = location_key
-            self.location = GameObject.objects_by_key.get(location_key)
+            self.location = target_location
             self.location.times_visited += 1
-            # self.location.action("M-ENTER")
-            return target_location.describe()
+            self.location.action("M-ENTER")
+            return self.location.describe()
         else:
             raise ValueError("Invalid Location Key")
 

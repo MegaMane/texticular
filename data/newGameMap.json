@@ -15,7 +15,7 @@
                 "ONBIT"
             ],
             "actionMethod": "action_room201",
-            "timesVisited": 0,
+            "timesVisited": 1,
             "exits": {
                 "WEST": {
                     "type": "RoomExit",

@@ -8,7 +8,7 @@ from texticular.character import Player,NPC
 from dataclasses import dataclass
 from texticular.game_enums import GameStates
 from texticular.command_parser import Parser, ParseTree
-from texticular.globals import *
+import texticular.globals as g
 
 
 
@@ -59,6 +59,7 @@ class Controller:
         self.commands["look"](self)
         return self.render()
     def handle_input(self) ->bool:
+        g.CONTROLLER = self
         tokens = self.tokens
         # print("handle input called")
         # print(vars(tokens))
