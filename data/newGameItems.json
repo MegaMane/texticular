@@ -68,6 +68,30 @@
             ],
             "actionMethod": null
         },
+       {
+            "type": "StoryItem",
+            "keyValue": "room201-purpleHandPrints",
+            "locationKey": "room201",
+            "name": "Hand Prints",
+            "synonyms": [
+                "Prints",
+                "Hand prints"
+            ],
+            "adjectives": [
+                "Sticky",
+                "Purple"
+            ],
+            "currentDescription": "Main",
+            "examineDescription": "Main",
+            "descriptions": {
+                "Main": "You take a closer look at the Sticky Purple Hand prints smudged on the window...yep, they are definitely yours."
+            },
+            "size": 1,
+            "flags": [
+                "SETPIECEBIT"
+            ],
+            "actionMethod": "action_room201_purpleHandPrints"
+        },
         {
             "type": "StoryItem",
             "keyValue": "room201-nightStand",

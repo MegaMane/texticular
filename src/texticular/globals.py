@@ -9,7 +9,9 @@ KNOWN_VERBS = [
     "open",
     "close",
     "put",
-    "inventory"
+    "inventory",
+    "wipe",
+    "wipe off"
 ]
 
 SINGLE_VERB_COMMANDS = [

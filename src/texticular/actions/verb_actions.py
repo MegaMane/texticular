@@ -139,6 +139,10 @@ def put(controller: Controller):
                 controller.response.append(f"The {item.name} won't fit in the {container.name}!")
                 return False
 
+def clean(controller: Controller):
+    item = controller.tokens.direct_object
+    controller.response.append(f"You really put a spit shine on the {item.name}...but it looks much the same.")
+
 def unlock(controller: Controller):
     pass
 

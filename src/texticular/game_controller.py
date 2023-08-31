@@ -55,7 +55,41 @@ class Controller:
 
         )
 
+        #self.player.name = input("Hello, What is your first name >>")
+
         print(intro_text)
+
+        intro_scene_part1 = (
+            "You wake up disoriented with a pounding headache in a shabby looking hotel room " 
+            "surrounded by a bunch of empty cans. You've got a taste in your mouth like a dirty old rat crawled in "
+            "and died in there. Disoriented, you roll out of the bed you woke up in, barely avoiding some questionable" 
+            " stains on the sheets, as you stumble to your feet sending cans flying like bowling pins in your wake. "
+            "You bend over to take a closer look at the pile of crushed aluminum. You read one of the labels: "
+            '"Fast Eddie''s Colon Cleanse: When in doubt flush it out!"'
+        )
+
+        intro_scene_part2 = (
+            "Side effects may include:\nDizzines, vomiting, diarrhea, cold sweats, hallucinations, intense panic," 
+            "paranoia, permanent tongue discoloration, mild brain damage, amnesia, bowel implosion, and occasionally hiccups."
+        )
+
+        intro_scene_part3 = (
+            "The can has a purple iridescent sludge oozing out of it that's really similar to the shade of purple that your"
+            " hands are. Come to think of it, you vaguely remember signing up for a test group that was supposed to try"
+            "out a new health drink. Looks like your part time job as a barrista just wasn't paying the bills, nothing "
+            "like easy money! The thing is, you don't remember anything about going to a hotel last night, and you "
+            "definitely don't remember anything about drinking a 24 pack of Fast Eddie's Colon Cleanse. Your stomach"
+            "starts to feel a little uneasy, but never mind that, it's time to spend some of that hard earned cash! "
+            "You reach into your wallet and realize in that moment that you don't even remember your name. You look at"
+            f"your license and focus your still hazy eyes and barely make out that it says...{self.player.name}."
+        )
+
+        self.response.extend([intro_scene_part1])
+        self.response.extend(["\n\n"])
+        self.response.extend([intro_scene_part2])
+        self.response.extend(["\n\n"])
+        self.response.extend([intro_scene_part3])
+        self.response.extend(["\n\n"])
         self.commands["look"](self)
         return self.render()
     def handle_input(self) ->bool:
@@ -120,15 +154,23 @@ class Controller:
             logging.debug(self.tokens)
             self.tokens.direct_object = self.get_game_object(self.tokens.direct_object_key)
             self.tokens.indirect_object = self.get_game_object(self.tokens.indirect_object_key)
+            logging.debug(f"""
+            Player Location (before handle input): {self.player.location.name}
+            Room Action Method: {self.player.location.action_method_name}
+            Direct Object Action Method: {GameObject.objects_by_key.get(self.tokens.direct_object_key).action_method_name}
+            """)
             self.handle_input()
             self.clocker()
-            logging.debug(f"""
-            Player Location: {self.player.location.name}
-            Room Action Method: {self.player.location.action_method_name}
-            """)
+
         else:
             self.response = [self.tokens.response]
             logging.debug(self.tokens)
+            logging.debug(f"""
+            Player Location: {self.player.location.name}
+            Room Action Method: {self.player.location.action_method_name}
+            Direct Object Action Method: {logging.debug(GameObject.objects_by_key.get(self.tokens.direct_object_key).action_method_name)}
+            """)
+
 
 
     def render(self):
@@ -166,6 +208,8 @@ class Controller:
         self.commands["close"] = va.close
         self.commands["put"] = va.put
         self.commands["inventory"] = va.inventory
+        self.commands["wipe"] = va.clean
+        self.commands["wipe off"] = va.clean
 
 
 

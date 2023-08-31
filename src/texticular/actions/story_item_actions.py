@@ -16,6 +16,13 @@ def action_room201_nightStand(controller: Controller, target: GameObject) -> boo
         return controller.commands["open"](controller)
     return False
 
+def action_room201_purpleHandPrints(controller: Controller, target: GameObject) -> bool:
+    if controller.tokens.action == "wipe" or controller.tokens.action == "wipe off":
+        controller.response.append("Try as you might the hand prints are here to stay.")
+        return True
+    return False
+
+
 
 def action_room201_couch(controller: Controller, target: GameObject) -> bool:
     tokens = controller.tokens
